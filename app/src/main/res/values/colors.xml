@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--默认的-->
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <!--自己的-->
+    <color name="line">#CBCED2</color>
+    <color name="common_title">#18B4ED</color>
+    <color name="transparent">#00000000</color>
+    <color name="hint">#AFAFAF</color>
+    <!--字母索引列表-->
+    <color name="item_back_press">#10000000</color>
+</resources>
