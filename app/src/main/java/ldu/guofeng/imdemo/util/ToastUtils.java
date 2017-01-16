@@ -2,14 +2,14 @@ package ldu.guofeng.imdemo.util;
 
 import android.widget.Toast;
 
-import ldu.guofeng.imdemo.IMApplication;
+import ldu.guofeng.imdemo.base.IMApplication;
 
 /**
  * Toast 封装类
  *
  * @author 郭峰
  */
-public class ToastUtil {
+public class ToastUtils {
 
     public static void showShortToast(String msg) {
         Toast.makeText(IMApplication.getMyAppContext(), msg, Toast.LENGTH_SHORT).show();

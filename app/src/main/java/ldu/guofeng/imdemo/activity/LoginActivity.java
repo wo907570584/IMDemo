@@ -2,6 +2,7 @@ package ldu.guofeng.imdemo.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -14,10 +15,11 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import ldu.guofeng.imdemo.im.LoginAsyncTask;
 import ldu.guofeng.imdemo.R;
+import ldu.guofeng.imdemo.im.LoginAsyncTask;
+import ldu.guofeng.imdemo.util.ActivityCollector;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
-import ldu.guofeng.imdemo.util.ToastUtil;
+import ldu.guofeng.imdemo.util.ToastUtils;
 
 
 /**
@@ -42,6 +44,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ActivityCollector.addActivity("LoginActivity",this);
         mContext = this;
         findView();
         init();
@@ -61,11 +64,6 @@ public class LoginActivity extends Activity {
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
-    }
 
     @Override
     protected void onDestroy() {
@@ -110,11 +108,11 @@ public class LoginActivity extends Activity {
         String username = account.getText().toString();
         String pwd = password.getText().toString();
         if (TextUtils.isEmpty(username)) {
-            ToastUtil.showShortToast("您的账号忘记填写啦");
+            ToastUtils.showShortToast("您的账号忘记填写啦");
             return;
         }
         if (TextUtils.isEmpty(pwd)) {
-            ToastUtil.showShortToast("您的密码忘记填写啦");
+            ToastUtils.showShortToast("您的密码忘记填写啦");
             return;
         }
         //执行异步登录任务
@@ -123,7 +121,7 @@ public class LoginActivity extends Activity {
     }
 
     private void doRegister() {
-        //Intent intent = new Intent(mContext, RegisterActivity.class);
-        //startActivity(intent);
+        Intent intent = new Intent(mContext, RegisterActivity.class);
+        startActivity(intent);
     }
 }

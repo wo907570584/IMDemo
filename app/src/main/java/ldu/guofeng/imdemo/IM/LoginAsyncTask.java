@@ -5,9 +5,10 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import ldu.guofeng.imdemo.activity.MainActivity;
-import ldu.guofeng.imdemo.view.LoadingDialog;
+import ldu.guofeng.imdemo.util.ActivityCollector;
+import ldu.guofeng.imdemo.view.CustomLoadingDialog;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
-import ldu.guofeng.imdemo.util.ToastUtil;
+import ldu.guofeng.imdemo.util.ToastUtils;
 
 /**
  * 登录-异步任务
@@ -21,7 +22,7 @@ import ldu.guofeng.imdemo.util.ToastUtil;
  */
 
 public class LoginAsyncTask extends AsyncTask<String, String, Boolean> {
-    private LoadingDialog loadDialog;
+    private CustomLoadingDialog loadDialog;
     private Context mContext;
 
     public LoginAsyncTask(Context context) {
@@ -33,7 +34,7 @@ public class LoginAsyncTask extends AsyncTask<String, String, Boolean> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        loadDialog = new LoadingDialog(mContext);
+        loadDialog = new CustomLoadingDialog(mContext);
         loadDialog.setTitle("正在登录...");
         loadDialog.show();
     }
@@ -68,8 +69,9 @@ public class LoginAsyncTask extends AsyncTask<String, String, Boolean> {
         if (bool) {
             Intent intent = new Intent(mContext, MainActivity.class);
             mContext.startActivity(intent);
+            ActivityCollector.removeActivity("LoginActivity");
         } else {
-            ToastUtil.showShortToast("请检您的网络是否可用、用户名和密码是否正确");
+            ToastUtils.showShortToast("请检您的网络是否可用、用户名和密码是否正确");
         }
     }
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ldu.guofeng.imdemo.view.ToolbarView
+    <ldu.guofeng.imdemo.view.CustomIndexToolbar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
@@ -13,12 +13,12 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:orientation="vertical"
-        app:right_btn_src="@drawable/toolbar_search2"
+        app:right_btn_src="@drawable/toolbar_search"
         app:right_btn_visible="true"
         app:title_text="@string/contacts"
         app:title_visible="true">
 
-    </ldu.guofeng.imdemo.view.ToolbarView>
+    </ldu.guofeng.imdemo.view.CustomIndexToolbar>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv"

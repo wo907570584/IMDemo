@@ -15,12 +15,12 @@ import ldu.guofeng.imdemo.R;
  * @author 郭峰
  */
 
-public class LoadingDialog extends Dialog {
+public class CustomLoadingDialog extends Dialog {
 
     private TextView tv;
     private boolean cancelable = true;
 
-    public LoadingDialog(Context context) {
+    public CustomLoadingDialog(Context context) {
         super(context, R.style.Dialog_style);
         init();
     }

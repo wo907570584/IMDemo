@@ -1,4 +1,4 @@
-package ldu.guofeng.imdemo.util;
+package ldu.guofeng.imdemo.base;
 
 /**
  * 常量类

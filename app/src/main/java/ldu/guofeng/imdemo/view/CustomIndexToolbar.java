@@ -15,7 +15,7 @@ import ldu.guofeng.imdemo.R;
  * 通用标题栏
  */
 
-public class ToolbarView extends RelativeLayout {
+public class CustomIndexToolbar extends RelativeLayout {
 
     //左btn
     private Boolean isLeftBtnVisible;
@@ -35,15 +35,15 @@ public class ToolbarView extends RelativeLayout {
     //背景色
     private int backgroundResId;
 
-    public ToolbarView(Context context) {
+    public CustomIndexToolbar(Context context) {
         this(context, null);
     }
 
-    public ToolbarView(Context context, AttributeSet attrs) {
+    public CustomIndexToolbar(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public ToolbarView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomIndexToolbar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(attrs);
     }
@@ -79,7 +79,7 @@ public class ToolbarView extends RelativeLayout {
         backgroundResId = typedArray.getResourceId(R.styleable.CustomToolBar_barBackground, -1);
         typedArray.recycle();
         /**-------------设置内容------------*/
-        View barLayoutView = View.inflate(getContext(), R.layout.common_toolbar, null);
+        View barLayoutView = View.inflate(getContext(), R.layout.common_index_toolbar, null);
         Button leftBtn = (Button) barLayoutView.findViewById(R.id.toolbar_left_btn);
         TextView leftTv = (TextView) barLayoutView.findViewById(R.id.toolbar_left_tv);
         TextView titleTv = (TextView) barLayoutView.findViewById(R.id.toolbar_title_tv);

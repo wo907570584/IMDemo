@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ldu.guofeng.imdemo.view.ToolbarView
+    <ldu.guofeng.imdemo.view.CustomIndexToolbar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
@@ -13,7 +13,7 @@
         app:title_text="@string/setting"
         app:title_visible="true">
 
-    </ldu.guofeng.imdemo.view.ToolbarView>
+    </ldu.guofeng.imdemo.view.CustomIndexToolbar>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,6 +43,7 @@
                     android:src="@mipmap/ic_launcher" />
 
                 <TextView
+                    android:id="@+id/name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -50,7 +51,7 @@
                     android:layout_margin="10dp"
                     android:gravity="center"
                     android:text="@string/app_auther"
-                    android:textSize="25sp" />
+                    android:textSize="30sp" />
 
 
             </RelativeLayout>
@@ -76,8 +77,8 @@
                 android:background="#FFFFFF">
 
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
@@ -118,8 +119,8 @@
                 android:background="#FFFFFF">
 
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
@@ -160,8 +161,8 @@
                 android:background="#FFFFFF">
 
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
@@ -207,8 +208,8 @@
                 android:background="#FFFFFF">
 
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
@@ -254,8 +255,8 @@
                 android:background="#FFFFFF">
 
                 <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"

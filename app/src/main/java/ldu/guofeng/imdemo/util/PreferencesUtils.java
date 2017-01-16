@@ -3,7 +3,7 @@ package ldu.guofeng.imdemo.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import ldu.guofeng.imdemo.IMApplication;
+import ldu.guofeng.imdemo.base.IMApplication;
 
 /**
  * SharedPreferences 封装类

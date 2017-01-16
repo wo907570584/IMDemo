@@ -29,5 +29,5 @@ dependencies {
     compile 'com.android.support:design:25.1.0'
     //集成字母索引列表
     compile project(':indexlib')
-
+    compile files('libs/systembartint-1.0.4.jar')
 }

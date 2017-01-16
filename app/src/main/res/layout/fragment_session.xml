@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <ldu.guofeng.imdemo.view.ToolbarView
+    <ldu.guofeng.imdemo.view.CustomIndexToolbar
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/toolbar_height"
@@ -13,6 +13,6 @@
         app:title_text="@string/session"
         app:title_visible="true">
 
-    </ldu.guofeng.imdemo.view.ToolbarView>
+    </ldu.guofeng.imdemo.view.CustomIndexToolbar>
 
 </LinearLayout>
