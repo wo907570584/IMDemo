@@ -1,10 +1,24 @@
 <resources>
     <string name="app_name">IMDemo</string>
-
+    <string name="app_version">版本：1.0</string>
     <string name="app_auther">郭峰</string>
-    <string name="register">注册账号</string>
+
     <string name="setting">设置</string>
     <string name="contacts">联系人</string>
     <string name="session">会话</string>
 
+    <string name="register">注册账号</string>
+    <string name="nofitication">通知栏开关</string>
+    <string name="msg_alert">消息提醒方式</string>
+    <string name="clear_msg">清理聊天记录</string>
+    <string name="about_author">关于作者</string>
+    <string name="exit_app">退出登录</string>
+
+    <string name="guofeng_alipay">122878486@qq.com</string>
+    <string name="html_guofeng_github">https://github.com/iamguofeng/HappyTalk</string>
+    <string name="html_guofeng_csdn">http://blog.csdn.net/plain_maple</string>
+    <string name="share_app">分享 Happy Talk</string>
+    <string name="share_app_txt">小伙伴们，一起来研究 “Happy Talk”，您可以在 https://github.com/iamguofeng 下载</string>
+    <string name="app_introduce">这是一款简约的通信应用。\n系统采用Client／Server结构，基于开源的XMPP协议。Android客户端连接到Openfire服务器作为即时通讯平台。\n\nAuther: 郭峰\nEmail: iamguofeng@163.com\nAddress: 山东省鲁东大学软件工程</string>
+    <string name="open_source">•asmack:http://www.igniterealtime.org/projects/smack\n•openfire: http://www.igniterealtime.org/downloads/index.jsp#openfire\n •Iconfont:http://www.iconfont.cn/plus\n </string>
 </resources>

@@ -38,4 +38,10 @@
         <item name="android:scaleType">fitXY</item>
         <item name="android:layout_centerInParent">true</item>
     </style>
+
+    <style name="textToolbarTitle">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
 </resources>

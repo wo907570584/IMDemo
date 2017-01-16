@@ -1,4 +1,4 @@
-package ldu.guofeng.imdemo.IM;
+package ldu.guofeng.imdemo.im;
 
 import android.content.Context;
 import android.content.Intent;

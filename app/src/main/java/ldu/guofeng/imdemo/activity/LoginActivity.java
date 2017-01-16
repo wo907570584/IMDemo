@@ -14,7 +14,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import ldu.guofeng.imdemo.IM.LoginAsyncTask;
+import ldu.guofeng.imdemo.im.LoginAsyncTask;
 import ldu.guofeng.imdemo.R;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
 import ldu.guofeng.imdemo.util.ToastUtil;
