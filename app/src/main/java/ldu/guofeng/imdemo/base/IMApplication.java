@@ -3,6 +3,8 @@ package ldu.guofeng.imdemo.base;
 import android.app.Application;
 import android.content.Context;
 
+import org.jivesoftware.smack.tcp.XMPPTCPConnection;
+
 /**
  * Application
  *
@@ -11,6 +13,7 @@ import android.content.Context;
 public class IMApplication extends Application {
 
     private static Context myAppContext = null;
+    public static XMPPTCPConnection connection = null;
 
     @Override
     public void onCreate() {

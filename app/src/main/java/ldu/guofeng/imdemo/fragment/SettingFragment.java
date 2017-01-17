@@ -15,6 +15,7 @@ import android.widget.TextView;
 import ldu.guofeng.imdemo.R;
 import ldu.guofeng.imdemo.activity.AboutActivity;
 import ldu.guofeng.imdemo.activity.LoginActivity;
+import ldu.guofeng.imdemo.im.SmackUtils;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
 import ldu.guofeng.imdemo.view.CustomPopWindow;
 
@@ -90,6 +91,8 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 /**
                  * 断开连接逻辑
                  */
+
+                SmackUtils.getInstance().exitConnect();
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 mContext.startActivity(intent);
                 getActivity().finish();

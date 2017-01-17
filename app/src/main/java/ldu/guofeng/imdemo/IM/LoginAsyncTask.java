@@ -6,9 +6,9 @@ import android.os.AsyncTask;
 
 import ldu.guofeng.imdemo.activity.MainActivity;
 import ldu.guofeng.imdemo.util.ActivityCollector;
-import ldu.guofeng.imdemo.view.CustomLoadingDialog;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
 import ldu.guofeng.imdemo.util.ToastUtils;
+import ldu.guofeng.imdemo.view.CustomLoadingDialog;
 
 /**
  * 登录-异步任务
@@ -46,13 +46,13 @@ public class LoginAsyncTask extends AsyncTask<String, String, Boolean> {
     protected Boolean doInBackground(String... strings) {
         String username = strings[0];
         String pwd = strings[1];
-        //连接服务器
+        //建立连接
+        SmackUtils.getInstance().getXMPPConnection();
         //登录
-        if (username.equals("123")) {
+        if (SmackUtils.getInstance().login(username, pwd)) {
             PreferencesUtils.getInstance().putString("username", username);
             PreferencesUtils.getInstance().putString("pwd", pwd);
             return true;
-
         }
         return false;
     }
@@ -71,7 +71,7 @@ public class LoginAsyncTask extends AsyncTask<String, String, Boolean> {
             mContext.startActivity(intent);
             ActivityCollector.removeActivity("LoginActivity");
         } else {
-            ToastUtils.showShortToast("请检您的网络是否可用、用户名和密码是否正确");
+            ToastUtils.showShortToast("请检查用户名和密码是否正确/网络是否可用");
         }
     }
 

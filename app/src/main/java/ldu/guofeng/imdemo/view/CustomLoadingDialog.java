@@ -44,10 +44,10 @@ public class CustomLoadingDialog extends Dialog {
         tv = (TextView) findViewById(R.id.tv);
     }
 
-    @Override
-    public void show() {
-        super.show();
-    }
+//    @Override
+//    public void show() {
+//        super.show();
+//    }
 
     @Override
     public void dismiss() {

@@ -25,9 +25,16 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     testCompile 'junit:junit:4.12'
+    //v7
     compile 'com.android.support:appcompat-v7:25.1.0'
+    //质感设计
     compile 'com.android.support:design:25.1.0'
-    //集成字母索引列表
+    //沉浸式状态栏
+    compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
+    //字母索引列表
     compile project(':indexlib')
-    compile files('libs/systembartint-1.0.4.jar')
+    //smack
+    compile 'org.igniterealtime.smack:smack-android-extensions:4.1.4'
+    compile 'org.igniterealtime.smack:smack-tcp:4.1.4'
+    compile 'xpp3:xpp3:1.1.4c'
 }

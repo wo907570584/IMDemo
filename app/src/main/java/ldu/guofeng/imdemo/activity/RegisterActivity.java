@@ -1,5 +1,7 @@
 package ldu.guofeng.imdemo.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -7,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import ldu.guofeng.imdemo.R;
+import ldu.guofeng.imdemo.im.SmackUtils;
+import ldu.guofeng.imdemo.util.PreferencesUtils;
 import ldu.guofeng.imdemo.util.ToastUtils;
 import ldu.guofeng.imdemo.view.CustomReturnToolbar;
 
@@ -15,6 +19,7 @@ public class RegisterActivity extends CustomReturnToolbar {
     private Button btn_register;
     private EditText et_username;
     private EditText et_password;
+    private Context mContext;
 
     @Override
     protected int provideContentViewId() {
@@ -36,6 +41,7 @@ public class RegisterActivity extends CustomReturnToolbar {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
         findView();
         init();
     }
@@ -54,24 +60,34 @@ public class RegisterActivity extends CustomReturnToolbar {
                 doRegister();
             }
         });
-
-
     }
 
     private void doRegister() {
-        String username = et_username.getText().toString();
-        String password = et_password.getText().toString();
-        if (TextUtils.isEmpty(username)) {
-            ToastUtils.showShortToast("请填写昵称");
-            return;
-        }
-        if (TextUtils.isEmpty(password)) {
-            ToastUtils.showLongToast("请填写密码");
+        final String username = et_username.getText().toString();
+        final String password = et_password.getText().toString();
+        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+            ToastUtils.showShortToast("昵称/密码不能为空");
             return;
         }
         /**
          * 注册逻辑......
          */
-    }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //建立连接
+                SmackUtils.getInstance().getXMPPConnection();
+                if (SmackUtils.getInstance().register(username, password)) {
+                    PreferencesUtils.getInstance().putString("username", username);
+                    PreferencesUtils.getInstance().putString("pwd", password);
+                    Intent intent = new Intent(mContext, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    ToastUtils.showShortToast("请检查用户名密码/网络状态");
+                }
 
+            }
+        }).start();
+    }
 }
