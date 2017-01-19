@@ -12,7 +12,9 @@ import android.widget.TextView;
 import ldu.guofeng.imdemo.R;
 
 /**
- * 通用标题栏
+ * 通用标题栏（左按钮、标签、右按钮、标签、中间标签 和 点击事件）
+ *
+ * @author GUOFENG
  */
 
 public class CustomIndexToolbar extends RelativeLayout {
@@ -35,6 +37,11 @@ public class CustomIndexToolbar extends RelativeLayout {
     //背景色
     private int backgroundResId;
 
+    private Button leftBtn;
+    private TextView leftTv;
+    private Button rightBtn;
+    private TextView rightTv;
+
     public CustomIndexToolbar(Context context) {
         this(context, null);
     }
@@ -47,6 +54,7 @@ public class CustomIndexToolbar extends RelativeLayout {
         super(context, attrs, defStyleAttr);
         initView(attrs);
     }
+
 
     /**
      * 初始化属性
@@ -80,12 +88,13 @@ public class CustomIndexToolbar extends RelativeLayout {
         typedArray.recycle();
         /**-------------设置内容------------*/
         View barLayoutView = View.inflate(getContext(), R.layout.common_index_toolbar, null);
-        Button leftBtn = (Button) barLayoutView.findViewById(R.id.toolbar_left_btn);
-        TextView leftTv = (TextView) barLayoutView.findViewById(R.id.toolbar_left_tv);
+        leftBtn = (Button) barLayoutView.findViewById(R.id.toolbar_left_btn);
+        leftTv = (TextView) barLayoutView.findViewById(R.id.toolbar_left_tv);
         TextView titleTv = (TextView) barLayoutView.findViewById(R.id.toolbar_title_tv);
-        Button rightBtn = (Button) barLayoutView.findViewById(R.id.toolbar_right_btn);
-        TextView rightTv = (TextView) barLayoutView.findViewById(R.id.toolbar_right_tv);
+        rightBtn = (Button) barLayoutView.findViewById(R.id.toolbar_right_btn);
+        rightTv = (TextView) barLayoutView.findViewById(R.id.toolbar_right_tv);
         RelativeLayout barRlyt = (RelativeLayout) barLayoutView.findViewById(R.id.toolbar_content_rlyt);
+
         if (isLeftBtnVisible) {
             leftBtn.setVisibility(VISIBLE);
         }
@@ -115,5 +124,26 @@ public class CustomIndexToolbar extends RelativeLayout {
         }
         //将设置完成之后的View添加到此LinearLayout中
         addView(barLayoutView, 0);
+
+    }
+
+    // 为左侧按钮添加点击事件
+    public void setLeftButtonListener(OnClickListener listener) {
+        leftBtn.setOnClickListener(listener);
+    }
+
+    // 为左侧标签添加点击事件
+    public void setLeftLabelListener(OnClickListener listener) {
+        leftTv.setOnClickListener(listener);
+    }
+
+    // 为右侧按钮添加点击事件
+    public void setRightButtonListener(OnClickListener listener) {
+        rightBtn.setOnClickListener(listener);
+    }
+
+    // 为右侧标签添加点击事件
+    public void setRightLabelListener(OnClickListener listener) {
+        rightTv.setOnClickListener(listener);
     }
 }

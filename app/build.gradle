@@ -19,6 +19,11 @@ android {
     }
 }
 
+configurations {
+    //xpp3消除警告
+    all*.exclude group: 'xpp3', module: 'xpp3'
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -33,8 +38,9 @@ dependencies {
     compile 'com.readystatesoftware.systembartint:systembartint:1.0.4'
     //字母索引列表
     compile project(':indexlib')
+    //左滑删除：根build.gradle需要引入maven { url "https://jitpack.io" }
+    compile 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.2.2'
     //smack
     compile 'org.igniterealtime.smack:smack-android-extensions:4.1.4'
     compile 'org.igniterealtime.smack:smack-tcp:4.1.4'
-    compile 'xpp3:xpp3:1.1.4c'
 }

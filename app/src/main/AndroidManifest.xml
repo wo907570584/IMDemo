@@ -2,8 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ldu.guofeng.imdemo">
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".base.IMApplication"
         android:allowBackup="true"
@@ -21,7 +21,9 @@
         <activity android:name=".activity.LoginActivity" />
         <activity android:name=".activity.MainActivity" />
         <activity android:name=".activity.AboutActivity" />
-        <activity android:name=".activity.RegisterActivity"/>
+        <activity android:name=".activity.RegisterActivity" />
+        <activity android:name=".activity.ChatActivity" />
+        <activity android:name=".activity.AddFriendActivity"></activity>
     </application>
 
 </manifest>
