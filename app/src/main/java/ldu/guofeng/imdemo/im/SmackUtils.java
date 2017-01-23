@@ -6,6 +6,8 @@ import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.chat.Chat;
+import org.jivesoftware.smack.chat.ChatManager;
 import org.jivesoftware.smack.roster.Roster;
 import org.jivesoftware.smack.roster.RosterEntry;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
@@ -131,21 +133,6 @@ public class SmackUtils {
         return list;
     }
 
-
-    /**
-     * 断开连接
-     */
-    public void exitConnect() {
-        if (IMApplication.connection != null) {
-            IMApplication.connection.disconnect();
-            IMApplication.connection = null;
-        }
-    }
-
-    public void sendMessage(String from, String to, String content) {
-
-    }
-
     /**
      * 删除好友
      *
@@ -164,5 +151,31 @@ public class SmackUtils {
             e.printStackTrace();
         }
         return 1;
+    }
+
+    /**
+     * 断开连接
+     */
+    public void exitConnect() {
+        if (IMApplication.connection != null) {
+            IMApplication.connection.disconnect();
+            IMApplication.connection = null;
+        }
+    }
+
+
+    public void sendMessage(String message, String to) {
+        try {
+
+            if (IMApplication.connection.isConnected()) {
+                IMApplication.connection.disconnect();
+            }
+            IMApplication.connection.connect();
+            ChatManager mChatManager = ChatManager.getInstanceFor(IMApplication.connection);
+            Chat mChat = mChatManager.createChat(to + "@" + Constant.IM_HOST);
+            mChat.sendMessage(message);
+        } catch (SmackException | IOException | XMPPException e) {
+            e.printStackTrace();
+        }
     }
 }

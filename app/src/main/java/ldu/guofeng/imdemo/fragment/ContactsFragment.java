@@ -61,6 +61,7 @@ public class ContactsFragment extends Fragment {
         mToolbar.setRightButtonListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //添加好友
                 Intent intent = new Intent(mContext, AddFriendActivity.class);
                 mContext.startActivity(intent);
             }

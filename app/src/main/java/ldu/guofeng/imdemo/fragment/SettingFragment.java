@@ -91,7 +91,6 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
                 /**
                  * 断开连接逻辑
                  */
-
                 SmackUtils.getInstance().exitConnect();
                 Intent intent = new Intent(mContext, LoginActivity.class);
                 mContext.startActivity(intent);

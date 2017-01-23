@@ -2,6 +2,7 @@ package ldu.guofeng.imdemo.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.widget.RecyclerView;
@@ -59,7 +60,10 @@ public class ConstactAdapter extends RecyclerView.Adapter<ConstactAdapter.ViewHo
             public void onClick(View v) {
                 //打开聊天界面
                 Intent intent = new Intent(mContext, ChatActivity.class);
-                intent.putExtra("from", mDatas.get(position).getName());
+                //用Bundle携带数据
+                Bundle bundle=new Bundle();
+                bundle.putString("to_user",mDatas.get(position).getName() );
+                intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
         });
