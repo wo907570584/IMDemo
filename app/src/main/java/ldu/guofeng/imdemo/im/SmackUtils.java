@@ -163,7 +163,12 @@ public class SmackUtils {
         }
     }
 
-
+    /**
+     * 发送消息
+     *
+     * @param message
+     * @param to
+     */
     public void sendMessage(String message, String to) {
         try {
 

@@ -4,7 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import org.jivesoftware.smack.chat.Chat;
+import org.jivesoftware.smack.chat.ChatManager;
+import org.jivesoftware.smack.chat.ChatManagerListener;
+
 import ldu.guofeng.imdemo.activity.MainActivity;
+import ldu.guofeng.imdemo.base.IMApplication;
 import ldu.guofeng.imdemo.util.ActivityCollector;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
 import ldu.guofeng.imdemo.util.ToastUtils;
@@ -52,6 +57,16 @@ public class LoginAsyncTask extends AsyncTask<String, String, Boolean> {
         if (SmackUtils.getInstance().login(username, pwd)) {
             PreferencesUtils.getInstance().putString("username", username);
             PreferencesUtils.getInstance().putString("pwd", pwd);
+
+            //初始化监听消息
+            ChatManager mChatManager = ChatManager.getInstanceFor(IMApplication.connection);
+            mChatManager.addChatListener(new ChatManagerListener() {
+                @Override
+                public void chatCreated(Chat chat, boolean createdLocally) {
+                    chat.addMessageListener(new ReceiveMsgListener());
+                }
+            });
+
             return true;
         }
         return false;

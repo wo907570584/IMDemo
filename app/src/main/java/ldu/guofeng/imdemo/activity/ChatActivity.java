@@ -15,11 +15,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import ldu.guofeng.imdemo.R;
 import ldu.guofeng.imdemo.adapter.ChatAdapter;
 import ldu.guofeng.imdemo.base.Constant;
 import ldu.guofeng.imdemo.bean.ChatModel;
 import ldu.guofeng.imdemo.bean.ItemModel;
+import ldu.guofeng.imdemo.bean.Msg;
 import ldu.guofeng.imdemo.im.SmackUtils;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
 import ldu.guofeng.imdemo.view.CustomReturnToolbar;
@@ -34,6 +39,7 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
     private String form, to;
     private LinearLayout chat_more_container;//+布局
     private ImageView chat_more;// 用于切换键盘与面板的按钮View
+
 
     @Override
     protected int provideContentViewId() {
@@ -72,6 +78,25 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
     }
 
     /**
+     * 订阅接收消息
+     * Subscribe，其含义为订阅者。
+     * 在其内传入了threadMode，我们定义为ThreadMode.MAIN，其含义是该方法在UI线程完成。
+     *
+     * @param msg
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void recMsgEventBus(Msg msg) {
+        //填充一条聊天信息，包括头像，消息内容
+        ChatModel model = new ChatModel();
+        model.setIcon("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1503652422,1776761182&fm=21&gp=0.jpg");
+        model.setContent(msg.getContent());
+        //在最后插入一条item，包括布局，聊天信息
+        adapter.insertLastItem(new ItemModel(ItemModel.CHAT_LEFT, model));
+        //滑动到最后
+        recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+    }
+
+    /**
      * 发送文本消息
      */
     private void sendTextMessage() {
@@ -97,7 +122,6 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
                 SmackUtils.getInstance().sendMessage(message, to);
             }
         }).start();
-        //--------------
 
         //滑动到最后
         recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
@@ -164,6 +188,8 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
     }
 
     private void init() {
+        //注册EventBus
+        EventBus.getDefault().register(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(adapter = new ChatAdapter());
@@ -195,5 +221,12 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
                 txtContent = s.toString().trim();
             }
         });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //解除注册
+        EventBus.getDefault().unregister(this);
     }
 }
