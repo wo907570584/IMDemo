@@ -31,8 +31,8 @@ import ldu.guofeng.imdemo.util.ToastUtils;
 
 public class ConstactAdapter extends RecyclerView.Adapter<ConstactAdapter.ViewHolder> {
 
-    public Context mContext;
-    public List<Friend> mDatas;
+    private Context mContext;
+    private List<Friend> mDatas;
 
     public ConstactAdapter(Context mContext, List<Friend> mDatas) {
         this.mContext = mContext;

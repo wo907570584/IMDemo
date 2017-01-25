@@ -15,6 +15,11 @@ import ldu.guofeng.imdemo.R;
 import ldu.guofeng.imdemo.bean.ChatModel;
 import ldu.guofeng.imdemo.bean.ItemModel;
 
+/**
+ * 聊天界面适配器
+ *
+ * @author GUOFENG
+ */
 public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BaseAdapter> {
 
     private ArrayList<ItemModel> dataList = new ArrayList<>();
