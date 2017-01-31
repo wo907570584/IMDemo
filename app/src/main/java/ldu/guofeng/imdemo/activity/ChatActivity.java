@@ -22,9 +22,9 @@ import org.greenrobot.eventbus.ThreadMode;
 import ldu.guofeng.imdemo.R;
 import ldu.guofeng.imdemo.adapter.ChatAdapter;
 import ldu.guofeng.imdemo.base.Constant;
-import ldu.guofeng.imdemo.bean.ChatModel;
 import ldu.guofeng.imdemo.bean.ItemModel;
-import ldu.guofeng.imdemo.bean.Msg;
+import ldu.guofeng.imdemo.bean.MsgModel;
+import ldu.guofeng.imdemo.bean.SessionModel;
 import ldu.guofeng.imdemo.im.SmackUtils;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
 import ldu.guofeng.imdemo.view.CustomReturnToolbar;
@@ -41,21 +41,60 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
     private ImageView chat_more;// 用于切换键盘与面板的按钮View
 
 
-    @Override
-    protected int provideContentViewId() {
-        return R.layout.activity_chat;
+    /**
+     * 订阅接收消息
+     * Subscribe，其含义为订阅者。
+     * 在其内传入了threadMode，我们定义为ThreadMode.MAIN，其含义是该方法在UI线程完成。
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void recMsgEventBus(MsgModel msg) {
+        if (msg.getFromUser().equals(to)) {
+            //在最后插入一条item，包括布局，聊天信息
+            adapter.insertLastItem(new ItemModel(ItemModel.LEFT_TEXT, msg));
+            //滑动到最后
+            recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+        }
     }
 
-    @Override
-    public boolean canBack() {
-        return true;
+
+    /**
+     * 发送文本消息
+     */
+    private void sendTextMessage() {
+        if (txtContent.equals("")) {
+            return;
+        }
+
+        //填充一条聊天信息，包括头像，消息内容
+        MsgModel msgModel = new MsgModel();
+        msgModel.setToUser(to);
+        msgModel.setType(Constant.MSG_TYPE_TEXT);
+        msgModel.setContent(txtContent);
+        //在最后插入一条item，包括布局，聊天信息
+        adapter.insertLastItem(new ItemModel(ItemModel.RIGHT_TEXT, msgModel));
+
+        final String message = form + Constant.SPLIT + to + Constant.SPLIT
+                + Constant.MSG_TYPE_TEXT + Constant.SPLIT
+                + txtContent;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                SmackUtils.getInstance().sendMessage(message, to);
+            }
+        }).start();
+
+        //滑动到最后,清空输入框
+        recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+        et_message.setText("");
+        insertSession(msgModel);
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (!to.equals("") || to != null)
-            getToolbar().setTitle(to);
+    public void insertSession(MsgModel msg) {
+        SessionModel sessionModel = new SessionModel();
+        sessionModel.setType(msg.getType());
+        sessionModel.setForm(msg.getToUser());
+        sessionModel.setContent(msg.getContent());
+        EventBus.getDefault().post(sessionModel);
     }
 
     @Override
@@ -77,98 +116,24 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
         }
     }
 
-    /**
-     * 订阅接收消息
-     * Subscribe，其含义为订阅者。
-     * 在其内传入了threadMode，我们定义为ThreadMode.MAIN，其含义是该方法在UI线程完成。
-     *
-     * @param msg
-     */
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void recMsgEventBus(Msg msg) {
-        //填充一条聊天信息，包括头像，消息内容
-        ChatModel model = new ChatModel();
-        model.setIcon("https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=1503652422,1776761182&fm=21&gp=0.jpg");
-        model.setContent(msg.getContent());
-        //在最后插入一条item，包括布局，聊天信息
-        adapter.insertLastItem(new ItemModel(ItemModel.CHAT_LEFT, model));
-        //滑动到最后
-        recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+    //------------------------------------------------------
+    @Override
+    protected int provideContentViewId() {
+        return R.layout.activity_chat;
     }
 
-    /**
-     * 发送文本消息
-     */
-    private void sendTextMessage() {
-
-        if (txtContent.equals("")) {
-            return;
-        }
-        //填充一条聊天信息，包括头像，消息内容
-        ChatModel model = new ChatModel();
-        model.setIcon("http://img4.imgtn.bdimg.com/it/u=48797599,160266951&fm=21&gp=0.jpg");
-        model.setContent(txtContent);
-        //在最后插入一条item，包括布局，聊天信息
-        adapter.insertLastItem(new ItemModel(ItemModel.CHAT_RIGHT, model));
-
-        //--------------
-        final String message = form + Constant.SPLIT + to + Constant.SPLIT
-                + Constant.MSG_TYPE_TEXT + Constant.SPLIT
-                + txtContent;
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                SmackUtils.getInstance().sendMessage(message, to);
-            }
-        }).start();
-
-        //滑动到最后
-        recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
-        //清空输入框
-        et_message.setText("");
+    @Override
+    public boolean canBack() {
+        return true;
     }
 
-    Handler hidePanelHandler = new Handler();
-    Runnable hidePanelTask = new Runnable() {
-        @Override
-        public void run() {
-            showPanelView();//隐藏面板
-        }
-    };
-
-    /**
-     * 隐藏面板
-     */
-    private void hidePanelView() {
-        if (chat_more_container.getVisibility() == View.VISIBLE) {
-            chat_more_container.setVisibility(View.GONE);
-        }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!to.equals("") || to != null)
+            getToolbar().setTitle(to);
     }
 
-    /**
-     * 显示面板
-     */
-    private void showPanelView() {
-        if (chat_more_container.getVisibility() == View.GONE) {
-            chat_more_container.setVisibility(View.VISIBLE);
-        } else {
-            chat_more_container.setVisibility(View.GONE);
-        }
-    }
-
-    /**
-     * 隐藏软键盘
-     */
-    public void hideSoftInputView() {
-        InputMethodManager manager = ((InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE));
-        if (getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
-            if (getCurrentFocus() != null)
-                manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        }
-    }
-
-    //--------------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -176,7 +141,6 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
         init();
         initEditText();
     }
-
 
     private void findView() {
         recyclerView = (RecyclerView) findViewById(R.id.recylerView);
@@ -228,5 +192,46 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
         super.onDestroy();
         //解除注册
         EventBus.getDefault().unregister(this);
+    }
+
+    //------------------------------------------------
+
+    Handler hidePanelHandler = new Handler();
+    Runnable hidePanelTask = new Runnable() {
+        @Override
+        public void run() {
+            showPanelView();//隐藏面板
+        }
+    };
+
+    /**
+     * 隐藏面板
+     */
+    private void hidePanelView() {
+        if (chat_more_container.getVisibility() == View.VISIBLE) {
+            chat_more_container.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 显示面板
+     */
+    private void showPanelView() {
+        if (chat_more_container.getVisibility() == View.GONE) {
+            chat_more_container.setVisibility(View.VISIBLE);
+        } else {
+            chat_more_container.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 隐藏软键盘
+     */
+    public void hideSoftInputView() {
+        InputMethodManager manager = ((InputMethodManager) this.getSystemService(Activity.INPUT_METHOD_SERVICE));
+        if (getWindow().getAttributes().softInputMode != WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN) {
+            if (getCurrentFocus() != null)
+                manager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
     }
 }

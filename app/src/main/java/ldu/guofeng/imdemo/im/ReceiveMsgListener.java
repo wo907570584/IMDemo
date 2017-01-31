@@ -1,7 +1,6 @@
 package ldu.guofeng.imdemo.im;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 import org.jivesoftware.smack.chat.Chat;
@@ -9,7 +8,7 @@ import org.jivesoftware.smack.chat.ChatMessageListener;
 import org.jivesoftware.smack.packet.Message;
 
 import ldu.guofeng.imdemo.base.Constant;
-import ldu.guofeng.imdemo.bean.Msg;
+import ldu.guofeng.imdemo.bean.MsgModel;
 
 
 public class ReceiveMsgListener implements ChatMessageListener {
@@ -19,18 +18,20 @@ public class ReceiveMsgListener implements ChatMessageListener {
         String msgBody = message.getBody();
         if (TextUtils.isEmpty(msgBody))
             return;
-        Log.e("ReceiveMsgListener", message.getBody());
+
         // form卍to卍消息类型卍消息内容
         String[] msgArr = msgBody.split(Constant.SPLIT);
         String form = msgArr[0];//发送者
         String to = msgArr[1];//接收者
         String msgtype = msgArr[2];//消息类型
         String msgcontent = msgArr[3];//消息内容
-        Msg msg = new Msg();
+
+        MsgModel msg = new MsgModel();
         msg.setFromUser(form);
         msg.setToUser(to);
         msg.setType(msgtype);
         msg.setContent(msgcontent);
+
         switch (msgtype) {
             case Constant.MSG_TYPE_TEXT:
                 EventBus.getDefault().post(msg);

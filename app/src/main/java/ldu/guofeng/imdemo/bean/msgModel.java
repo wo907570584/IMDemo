@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by GUOFENG on 2017/1/24.
  */
 
-public class Msg implements Serializable {
+public class MsgModel implements Serializable {
     private String fromUser;//发送者
     private String toUser;//接收者
     private String type;//信息类型
