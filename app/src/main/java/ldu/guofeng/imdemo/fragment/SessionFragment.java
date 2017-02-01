@@ -43,7 +43,7 @@ public class SessionFragment extends Fragment {
     private void findView() {
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recylerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
-        mRecyclerView.setAdapter(mAdapter = new SessionAdapter());
+        mRecyclerView.setAdapter(mAdapter = new SessionAdapter(mContext));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
     }
 

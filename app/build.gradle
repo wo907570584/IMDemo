@@ -44,7 +44,7 @@ dependencies {
     //通过少量实现多个模块之间通信，降低因多重回调导致的模块间强耦合，提高性能。
     compile 'org.greenrobot:eventbus:3.0.0'
     //smack
-    compile 'org.igniterealtime.smack:smack-android-extensions:4.1.4'
-    compile 'org.igniterealtime.smack:smack-tcp:4.1.4'
+    compile 'org.igniterealtime.smack:smack-android-extensions:4.1.9'
+    compile 'org.igniterealtime.smack:smack-tcp:4.1.9'
     compile 'de.measite.minidns:minidns:0.1.7'
 }

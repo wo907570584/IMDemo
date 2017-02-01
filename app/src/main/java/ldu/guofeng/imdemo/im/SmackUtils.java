@@ -179,6 +179,7 @@ public class SmackUtils {
             ChatManager mChatManager = ChatManager.getInstanceFor(IMApplication.connection);
             Chat mChat = mChatManager.createChat(to + "@" + Constant.IM_HOST);
             mChat.sendMessage(message);
+            //mChat.close();
         } catch (SmackException | IOException | XMPPException e) {
             e.printStackTrace();
         }
