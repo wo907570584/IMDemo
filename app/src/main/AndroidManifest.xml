@@ -23,7 +23,8 @@
         <activity android:name=".activity.AboutActivity" />
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.ChatActivity" />
-        <activity android:name=".activity.AddFriendActivity"></activity>
+        <activity android:name=".activity.AddFriendActivity" />
+
     </application>
 
 </manifest>

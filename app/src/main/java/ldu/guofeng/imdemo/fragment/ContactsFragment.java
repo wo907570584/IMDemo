@@ -27,7 +27,6 @@ import ldu.guofeng.imdemo.adapter.ConstactAdapter;
 import ldu.guofeng.imdemo.bean.Friend;
 import ldu.guofeng.imdemo.im.SmackUtils;
 import ldu.guofeng.imdemo.util.DividerItemDecoration;
-import ldu.guofeng.imdemo.util.ToastUtils;
 import ldu.guofeng.imdemo.view.CustomIndexToolbar;
 
 
@@ -51,11 +50,11 @@ public class ContactsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mContext = getActivity();
         mView = inflater.inflate(R.layout.fragment_contacts, container);
-        findView();
+        init();
         return mView;
     }
 
-    private void findView() {
+    private void init() {
         //添加好友点击监听
         mToolbar = (CustomIndexToolbar) mView.findViewById(R.id.title_bar);
         mToolbar.setRightButtonListener(new View.OnClickListener() {
@@ -78,7 +77,9 @@ public class ContactsFragment extends Fragment {
         mTvSideBarHint = (TextView) mView.findViewById(R.id.tvSideBarHint);//HintTextView
         mIndexBar = (IndexBar) mView.findViewById(R.id.indexBar);//IndexBar
 
+
     }
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -90,24 +91,15 @@ public class ContactsFragment extends Fragment {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what) {
-                case 0:
-                    ToastUtils.showShortToast("您暂时没有好友");
-                    break;
-                case 1:
-                    mAdapter.setDatas(mDatas);
-                    mAdapter.notifyDataSetChanged();
-                    mIndexBar.setmPressedShowTextView(mTvSideBarHint)//设置HintTextView
-                            .setNeedRealIndex(true)//设置需要真实的索引
-                            .setmLayoutManager(mManager)//设置RecyclerView的LayoutManager
-                            .setmSourceDatas(mDatas)//设置数据
-                            .invalidate();
-                    mDecoration.setmDatas(mDatas);
-                    Log.e("IMDemo", "好友数量=" + mDatas.size());
-                    break;
-                default:
-                    break;
-            }
+            Log.e("更新好友列表", "好友数量=" + mDatas.size());
+            mAdapter.setDatas(mDatas);
+            mAdapter.notifyDataSetChanged();
+            mIndexBar.setmPressedShowTextView(mTvSideBarHint)//设置HintTextView
+                    .setNeedRealIndex(true)//设置需要真实的索引
+                    .setmLayoutManager(mManager)//设置RecyclerView的LayoutManager
+                    .setmSourceDatas(mDatas)//设置数据
+                    .invalidate();
+            mDecoration.setmDatas(mDatas);
         }
     };
 
@@ -119,10 +111,8 @@ public class ContactsFragment extends Fragment {
             @Override
             public void run() {
                 mDatas = SmackUtils.getInstance().getFriendsList();
-                if (mDatas.size() <= 0) {
+                if (mDatas.size() > 0) {
                     mHandler.sendEmptyMessage(0);
-                } else {
-                    mHandler.sendEmptyMessage(1);
                 }
             }
         }).start();

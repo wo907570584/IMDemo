@@ -35,22 +35,16 @@ public class SessionFragment extends Fragment {
         mContext = getActivity();
         mView = inflater.inflate(R.layout.fragment_session, container);
         findView();
-        //注册EventBus
-        EventBus.getDefault().register(this);
+        EventBus.getDefault().register(this); //注册EventBus
         return mView;
     }
+
 
     private void findView() {
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.recylerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         mRecyclerView.setAdapter(mAdapter = new SessionAdapter(mContext));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(mContext, DividerItemDecoration.VERTICAL_LIST));
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
     }
 
     /**
@@ -78,7 +72,7 @@ public class SessionFragment extends Fragment {
     }
 
     public void insertSession(SessionModel sessionModel) {
-        Log.e("recSessionEventBus", sessionModel.getForm()+":" + sessionModel.getContent());
+        Log.e("recSessionEventBus", sessionModel.getForm() + ":" + sessionModel.getContent());
         mAdapter.insertSessionItem(sessionModel);
     }
 

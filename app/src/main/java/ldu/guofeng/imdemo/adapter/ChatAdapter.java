@@ -57,11 +57,11 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BaseAdapter> {
     public ChatAdapter.BaseAdapter onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case ItemModel.LEFT_TEXT:
-                return new LeftTextViewHolder(
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_left_text, parent, false));
+                return new LeftTextViewHolder(LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.chat_left_text, parent, false));
             case ItemModel.RIGHT_TEXT:
-                return new RightTextViewHolder(
-                        LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_right_text, parent, false));
+                return new RightTextViewHolder(LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.chat_right_text, parent, false));
         }
         return null;
     }

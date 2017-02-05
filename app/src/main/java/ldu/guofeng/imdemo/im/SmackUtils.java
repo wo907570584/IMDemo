@@ -10,6 +10,7 @@ import org.jivesoftware.smack.chat.Chat;
 import org.jivesoftware.smack.chat.ChatManager;
 import org.jivesoftware.smack.roster.Roster;
 import org.jivesoftware.smack.roster.RosterEntry;
+import org.jivesoftware.smack.sasl.SASLMechanism;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.tcp.XMPPTCPConnectionConfiguration;
 import org.jivesoftware.smackx.iqregister.AccountManager;
@@ -24,9 +25,14 @@ import java.util.Map;
 import ldu.guofeng.imdemo.base.Constant;
 import ldu.guofeng.imdemo.base.IMApplication;
 import ldu.guofeng.imdemo.bean.Friend;
+import ldu.guofeng.imdemo.util.PreferencesUtils;
 
 public class SmackUtils {
 
+    //connection.isConnected()
+    //布尔值表示是否连接到服务器（此时用户不一定登录）
+    //connection.isAuthenticated()
+    //布尔值表示是否登录成功（即用户名+密码验证通过），此时与服务器保持连接
     private static SmackUtils smackUtils;
 
     public static SmackUtils getInstance() {
@@ -41,19 +47,75 @@ public class SmackUtils {
      */
     public void getXMPPConnection() {
         if (IMApplication.connection == null || !IMApplication.connection.isConnected()) {
-            XMPPTCPConnectionConfiguration.Builder builder = XMPPTCPConnectionConfiguration.builder();
-            builder.setHost(Constant.IM_HOST);//ip
-            builder.setPort(Constant.IM_PORT);//端口
-            builder.setServiceName(Constant.IM_SERVER);//此处填写openfire服务器名称
-            builder.setCompressionEnabled(false);//是否允许使用压缩
-            builder.setDebuggerEnabled(true);//是否开启调试
-            builder.setSendPresence(true);//是否发送Presece信息
+            XMPPTCPConnectionConfiguration builder = XMPPTCPConnectionConfiguration.builder()
+                    .setHost(Constant.IM_HOST)//ip
+                    .setPort(Constant.IM_PORT)//端口
+                    .setServiceName(Constant.IM_SERVER)//此处填写openfire服务器名称
+                    .setCompressionEnabled(false)//是否允许使用压缩
+                    .setSendPresence(true)//是否发送Presece信息
+                    .setDebuggerEnabled(true)//是否开启调试
+                    .setResource("Android")//设置登陆设备标识
+                    .setConnectTimeout(15 * 1000)//连接超时时间
+                    .setSecurityMode(ConnectionConfiguration.SecurityMode.disabled)//设置TLS安全模式时使用的连接
+                    .build();
             // 是否使用SASL
-            SASLAuthentication.blacklistSASLMechanism("DIGEST-MD5");
-            // 设置TLS安全模式时使用的连接
-            builder.setSecurityMode(ConnectionConfiguration.SecurityMode.disabled);
-            IMApplication.connection = new XMPPTCPConnection(builder.build());
+            SASLAuthentication.blacklistSASLMechanism(SASLMechanism.DIGESTMD5);
+            IMApplication.connection = new XMPPTCPConnection(builder);
         }
+    }
+
+    /**
+     * 断开连接
+     */
+    public void exitConnect() {
+        if (IMApplication.connection != null && IMApplication.connection.isConnected()) {
+            IMApplication.connection.disconnect();
+            IMApplication.connection = null;
+        }
+    }
+
+    /**
+     * 检查连接
+     */
+    public void checkConnect() {
+        if (IMApplication.connection == null) {//null
+            getXMPPConnection();
+            login(
+                    PreferencesUtils.getInstance().getString("usename"),
+                    PreferencesUtils.getInstance().getString("pwd")
+            );
+        }
+
+        if (!IMApplication.connection.isConnected()) {//没有连接到服务器
+            try {
+                IMApplication.connection.connect();
+            } catch (SmackException | IOException | XMPPException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /**
+     * 注册
+     *
+     * @param username
+     * @param password
+     */
+    public boolean register(String username, String password) {
+        try {
+            checkConnect();
+            Map<String, String> map = new HashMap<String, String>();
+            map.put("username", username);
+            map.put("password", password);
+            map.put("phone", "Android");
+            AccountManager accountManager = AccountManager.getInstance(IMApplication.connection);
+            accountManager.sensitiveOperationOverInsecureConnection(true);
+            accountManager.createAccount(username, password, map);
+        } catch (SmackException | XMPPException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -66,13 +128,12 @@ public class SmackUtils {
 
     public boolean login(String username, String password) {
         try {
-            if (IMApplication.connection.isConnected()) {
-                IMApplication.connection.disconnect();
-            }
-            IMApplication.connection.connect();
-            IMApplication.connection.login(username, password);
-            if (IMApplication.connection.isAuthenticated()) {
+            checkConnect();
+            if (IMApplication.connection.isAuthenticated()) {//已经登录
                 return true;
+            } else {
+                IMApplication.connection.login(username, password);//登录
+                return IMApplication.connection.isAuthenticated();
             }
         } catch (IOException | SmackException | XMPPException e) {
             e.printStackTrace();
@@ -81,54 +142,24 @@ public class SmackUtils {
     }
 
     /**
-     * 注册
-     *
-     * @param username
-     * @param password
-     */
-    public boolean register(String username, String password) {
-        try {
-            if (IMApplication.connection.isConnected()) {
-                IMApplication.connection.disconnect();
-            }
-            IMApplication.connection.connect();
-            Map<String, String> map = new HashMap<String, String>();
-            map.put("username", username);
-            map.put("password", password);
-            map.put("phone", "Android");
-            AccountManager accountManager = AccountManager.getInstance(IMApplication.connection);
-            accountManager.sensitiveOperationOverInsecureConnection(true);
-            accountManager.createAccount(username, password, map);
-        } catch (SmackException | IOException | XMPPException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * 获取好友列表
      *
      * @return
      */
     public List<Friend> getFriendsList() {
+        checkConnect();
         List<Friend> list = new ArrayList<Friend>();
-        try {
-            if (IMApplication.connection.isConnected()) {
-                IMApplication.connection.disconnect();
-            }
-            IMApplication.connection.connect();
-            //Roster对象翻译成中文为"花名册",表示用户的所有好友清单以及申请加好友的用户清单
-            Roster roster = Roster.getInstanceFor(IMApplication.connection);
-            Collection<RosterEntry> rosterEntries = roster.getEntries();
-            for (RosterEntry rosterentry : rosterEntries) {
-                Friend friend = new Friend();
+        //Roster对象翻译成中文为"花名册",表示用户的所有好友清单以及申请加好友的用户清单
+        Roster roster = Roster.getInstanceFor(IMApplication.connection);
+        Collection<RosterEntry> rosterEntries = roster.getEntries();
+        for (RosterEntry rosterentry : rosterEntries) {
+            Friend friend = new Friend();
+            if (!rosterentry.getType().toString().equals("none")){
                 friend.setName(rosterentry.getUser().split("@")[0]);
-                Log.e("IMDemo", rosterentry.getUser());
                 list.add(friend);
+                Log.e("IMDemo", rosterentry.getUser());
             }
-        } catch (SmackException | IOException | XMPPException e) {
-            e.printStackTrace();
+
         }
         return list;
     }
@@ -141,27 +172,15 @@ public class SmackUtils {
      */
     public int deleteFriend(String userJID) {
         try {
-            if (IMApplication.connection.isConnected()) {
-                IMApplication.connection.disconnect();
-            }
-            IMApplication.connection.connect();
+            checkConnect();
             Roster roster = Roster.getInstanceFor(IMApplication.connection);
             roster.removeEntry(roster.getEntry(userJID));
-        } catch (SmackException | XMPPException | IOException e) {
+        } catch (SmackException | XMPPException e) {
             e.printStackTrace();
         }
         return 1;
     }
 
-    /**
-     * 断开连接
-     */
-    public void exitConnect() {
-        if (IMApplication.connection != null) {
-            IMApplication.connection.disconnect();
-            IMApplication.connection = null;
-        }
-    }
 
     /**
      * 发送消息
@@ -171,16 +190,27 @@ public class SmackUtils {
      */
     public void sendMessage(String message, String to) {
         try {
-
-            if (IMApplication.connection.isConnected()) {
-                IMApplication.connection.disconnect();
-            }
-            IMApplication.connection.connect();
+            checkConnect();
             ChatManager mChatManager = ChatManager.getInstanceFor(IMApplication.connection);
             Chat mChat = mChatManager.createChat(to + "@" + Constant.IM_HOST);
             mChat.sendMessage(message);
-            //mChat.close();
-        } catch (SmackException | IOException | XMPPException e) {
+            mChat.close();
+        } catch (SmackException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 添加好友
+     *
+     * @param userName
+     */
+    public void addFriend(String userName) {
+        try {
+            checkConnect();
+            Roster roster = Roster.getInstanceFor(IMApplication.connection);
+            roster.createEntry(userName, userName, null);
+        } catch (SmackException | XMPPException e) {
             e.printStackTrace();
         }
     }

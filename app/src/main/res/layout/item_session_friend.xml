@@ -24,9 +24,9 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="9"
             android:layout_height="match_parent"
             android:layout_marginRight="30dp"
+            android:layout_weight="9"
             android:orientation="vertical">
 
             <TextView
@@ -34,31 +34,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:gravity="center_vertical"
+                android:lines="1"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
                 android:text="Plain Maple"
                 android:textColor="@android:color/black"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 tools:ignore="RtlSymmetry" />
 
             <TextView
                 android:id="@+id/ic_last_msg"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="25dp"
                 android:gravity="center_vertical"
+                android:lines="1"
                 android:paddingLeft="20dp"
                 android:text="2017年，你好！"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 tools:ignore="RtlSymmetry" />
         </LinearLayout>
 
         <ImageView
             android:id="@+id/ic_tip_count"
+            android:layout_width="0dp"
+            android:layout_height="16dp"
             android:layout_gravity="bottom"
             android:layout_marginBottom="12dp"
-            android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="16dp"
             android:src="@drawable/message_red_tip" />
 
     </LinearLayout>

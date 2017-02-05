@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <EditText
-            android:id="@+id/et_id"
+            android:id="@+id/et_username"
             android:layout_width="0dp"
             android:layout_height="@dimen/toolbar_height"
             android:layout_below="@+id/comm"
@@ -31,6 +31,7 @@
             android:textSize="16sp" />
 
         <Button
+            android:id="@+id/btn_add"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
@@ -39,7 +40,7 @@
             android:layout_weight="1"
             android:textSize="16sp"
             android:background="@drawable/login_btn_selector"
-            android:text="搜索"
+            android:text="添加"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

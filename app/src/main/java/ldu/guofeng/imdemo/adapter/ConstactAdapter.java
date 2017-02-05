@@ -40,6 +40,7 @@ public class ConstactAdapter extends RecyclerView.Adapter<ConstactAdapter.ViewHo
     }
 
     public ConstactAdapter setDatas(List<Friend> datas) {
+        mDatas.clear();
         mDatas = datas;
         return this;
     }
@@ -83,7 +84,7 @@ public class ConstactAdapter extends RecyclerView.Adapter<ConstactAdapter.ViewHo
                             case 1:
                                 mDatas.remove(holder.getAdapterPosition());
                                 notifyDataSetChanged();
-                                ToastUtils.showShortToast("删除" + mDatas.get(position).getName() + "成功");
+                                ToastUtils.showShortToast("删除成功");
                                 break;
                             default:
                                 break;

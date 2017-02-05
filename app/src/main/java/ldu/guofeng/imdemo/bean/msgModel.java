@@ -9,7 +9,7 @@ import java.io.Serializable;
 public class MsgModel implements Serializable {
     private String fromUser;//发送者
     private String toUser;//接收者
-    private String type;//信息类型
+    private int type;//信息类型
     private String content;//信息内容
 
     public String getFromUser() {
@@ -28,11 +28,11 @@ public class MsgModel implements Serializable {
         this.toUser = toUser;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(int type) {
         this.type = type;
     }
 
