@@ -25,6 +25,12 @@
         <activity android:name=".activity.ChatActivity" />
         <activity android:name=".activity.AddFriendActivity" />
 
+        <receiver android:name=".util.NewMsgReceiver">
+            <intent-filter>
+                <action android:name="TYPE_NEW_MSG" />
+            </intent-filter>
+        </receiver>
+
     </application>
 
 </manifest>

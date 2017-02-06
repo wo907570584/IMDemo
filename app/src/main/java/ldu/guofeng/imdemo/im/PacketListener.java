@@ -39,6 +39,7 @@ public class PacketListener implements StanzaListener {
                     msg.setToUser(msgArr[1]);//接收者
                     msg.setType(Integer.parseInt(msgArr[2]));//消息类型
                     msg.setContent(msgArr[3]);//消息内容
+                    updateNofitication(msgArr[0], Integer.parseInt(msgArr[2]));
                     //发送一条消息
                     EventBus.getDefault().post(msg);
                     break;
@@ -66,7 +67,7 @@ public class PacketListener implements StanzaListener {
                 case unavailable://表示收到离线状态
                     break;
                 case subscribe://表示收到请求订阅
-                    Log.e("【PacketListener】","订阅");
+                    Log.e("【PacketListener】", "订阅");
                     updateList();
                     break;
                 case subscribed://表示收到同意订阅
@@ -74,7 +75,7 @@ public class PacketListener implements StanzaListener {
                 case unsubscribed://表示收到拒绝订阅
                     break;
                 case unsubscribe://表示收到取消订阅
-                    Log.e("【PacketListener】","取消订阅");
+                    Log.e("【PacketListener】", "取消订阅");
                     updateList();
                     break;
                 case error://表示收到错误消息
@@ -104,7 +105,15 @@ public class PacketListener implements StanzaListener {
         }
     }
 
-    public void updateList(){
+    private void updateNofitication(String form, int type) {
+        Intent intent_nftc = new Intent();
+        intent_nftc.putExtra("form", form);
+        intent_nftc.putExtra("type", type);
+        intent_nftc.setAction("TYPE_NEW_MSG");
+        IMApplication.getMyAppContext().sendBroadcast(intent_nftc);
+    }
+
+    private void updateList() {
         //广播，更新列表
         Intent intent_list = new Intent();
         intent_list.setAction("TYPE_UPDATE_LIST");
