@@ -47,4 +47,6 @@ dependencies {
     compile 'org.igniterealtime.smack:smack-android-extensions:4.1.9'
     compile 'org.igniterealtime.smack:smack-tcp:4.1.9'
     compile 'de.measite.minidns:minidns:0.1.7'
+    //百度
+    compile files('libs/BaiduLBS_Android.jar')
 }

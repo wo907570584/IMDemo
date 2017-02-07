@@ -2,7 +2,28 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ldu.guofeng.imdemo">
 
+    <!-- 用于访问网络 -->
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <!-- 用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于保持屏幕唤醒 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!-- 允许程序读取或写入系统设置 -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- 获取SD卡读取权限，用户写入离线定位数据-->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
         android:name=".base.IMApplication"
@@ -11,6 +32,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/NoActionBar">
+
+        <!-- 百度地图 key -->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="NZsqHDHMshES6GmjBuD7SZ0ySy5vPBcU" />
+        <!-- 百度定位 service -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
+        <!-- 启动页 -->
         <activity android:name=".activity.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,13 +57,12 @@
         <activity android:name=".activity.RegisterActivity" />
         <activity android:name=".activity.ChatActivity" />
         <activity android:name=".activity.AddFriendActivity" />
-
+        <activity android:name=".activity.ShareLocActivity" />
+        <!-- 新消息广播>发出通知 -->
         <receiver android:name=".util.NewMsgReceiver">
             <intent-filter>
                 <action android:name="TYPE_NEW_MSG" />
             </intent-filter>
         </receiver>
-
     </application>
-
 </manifest>

@@ -36,11 +36,6 @@ public class AddFriendActivity extends CustomReturnToolbar {
     }
 
     @Override
-    public boolean canBack() {
-        return true;
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         getToolbar().setTitle("添加好友");

@@ -51,7 +51,7 @@ public abstract class CustomReturnToolbar extends AppCompatActivity {
     }
 
     public boolean canBack() {
-        return false;
+        return true;
     }
 
 

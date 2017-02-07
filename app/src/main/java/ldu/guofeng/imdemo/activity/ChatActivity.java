@@ -1,6 +1,7 @@
 package ldu.guofeng.imdemo.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
@@ -35,6 +36,7 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
     private ChatAdapter adapter;
     private EditText et_message;// 键盘焦点View，用于输入内容
     private TextView tv_send;
+    private TextView send_loc;
     private String txtContent;
     private String form, to;
     private LinearLayout chat_more_container;//+布局
@@ -111,6 +113,14 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
                 hideSoftInputView();//隐藏软键盘
                 hidePanelHandler.postDelayed(hidePanelTask, 200);//显示面板
                 break;
+            case R.id.tv_loc:
+                Intent intent_loc = new Intent(this, ShareLocActivity.class);
+                //用Bundle携带数据
+                Bundle bundle = new Bundle();
+                bundle.putString("to_user", to);
+                intent_loc.putExtras(bundle);
+                startActivity(intent_loc);
+                break;
             default:
                 break;
         }
@@ -149,6 +159,7 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
         chat_more = (ImageView) findViewById(R.id.chat_more);
 
         chat_more_container = (LinearLayout) findViewById(R.id.chat_more_container);
+        send_loc = (TextView) findViewById(R.id.tv_loc);
     }
 
     private void init() {
@@ -160,6 +171,7 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
         et_message.setOnClickListener(this);
         tv_send.setOnClickListener(this);
         chat_more.setOnClickListener(this);
+        send_loc.setOnClickListener(this);
 
         form = PreferencesUtils.getInstance().getString("username");
         //接收数据

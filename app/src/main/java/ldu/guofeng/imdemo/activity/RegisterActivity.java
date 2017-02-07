@@ -26,10 +26,6 @@ public class RegisterActivity extends CustomReturnToolbar {
         return R.layout.activity_register;
     }
 
-    @Override
-    public boolean canBack() {
-        return true;
-    }
 
     @Override
     protected void onResume() {
