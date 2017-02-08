@@ -38,7 +38,8 @@ public class PacketListener implements StanzaListener {
                     msg.setFromUser(msgArr[0]);//发送者
                     msg.setToUser(msgArr[1]);//接收者
                     msg.setType(Integer.parseInt(msgArr[2]));//消息类型
-                    msg.setContent(msgArr[3]);//消息内容
+                    msg.setContent(msgArr[3]);//文本内容
+
                     updateNofitication(msgArr[0], Integer.parseInt(msgArr[2]));
                     //发送一条消息
                     EventBus.getDefault().post(msg);

@@ -110,6 +110,8 @@ public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.MsgViewH
             user.setText(sessionModel.getForm());
             if (sessionModel.getType() == Constant.MSG_TYPE_TEXT) {
                 last_msg.setText(sessionModel.getContent());
+            } else if (sessionModel.getType() == Constant.MSG_TYPE_LOC) {
+                last_msg.setText("[位置]");
             }
 
             content.setOnClickListener(new View.OnClickListener() {

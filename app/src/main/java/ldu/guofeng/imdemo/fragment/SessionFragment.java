@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +53,7 @@ public class SessionFragment extends Fragment {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void recSessionEventBus(SessionModel sessionModel) {
-        insertSession(sessionModel);
+        mAdapter.insertSessionItem(sessionModel);
     }
 
     /**
@@ -68,13 +67,7 @@ public class SessionFragment extends Fragment {
         sessionModel.setType(msg.getType());
         sessionModel.setForm(msg.getFromUser());
         sessionModel.setContent(msg.getContent());
-        insertSession(sessionModel);
-    }
-
-    public void insertSession(SessionModel sessionModel) {
-        Log.e("recSessionEventBus", sessionModel.getForm() + ":" + sessionModel.getContent());
         mAdapter.insertSessionItem(sessionModel);
     }
-
 
 }

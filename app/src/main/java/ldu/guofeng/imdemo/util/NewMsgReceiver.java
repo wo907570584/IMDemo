@@ -9,6 +9,7 @@ import android.content.Intent;
 
 import ldu.guofeng.imdemo.R;
 import ldu.guofeng.imdemo.activity.MainActivity;
+import ldu.guofeng.imdemo.base.Constant;
 import ldu.guofeng.imdemo.base.IMApplication;
 
 /**
@@ -25,9 +26,9 @@ public class NewMsgReceiver extends BroadcastReceiver {
         String form = intent.getStringExtra("form");
         int type = intent.getIntExtra("type", 0);
         String t = null;
-        if (type == 1) {
+        if (type == Constant.MSG_TYPE_TEXT) {
             t = "文本消息";
-        } else if (type == 2) {
+        } else if (type == Constant.MSG_TYPE_LOC) {
             t = "位置消息";
         } else if (type == 0) {
             t = "未知消息";

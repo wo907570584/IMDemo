@@ -1,6 +1,7 @@
 package ldu.guofeng.imdemo.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -41,6 +42,7 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
     private String form, to;
     private LinearLayout chat_more_container;//+布局
     private ImageView chat_more;// 用于切换键盘与面板的按钮View
+    private Context mContext;
 
 
     /**
@@ -51,11 +53,31 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void recMsgEventBus(MsgModel msg) {
         if (msg.getFromUser().equals(to)) {
-            //在最后插入一条item，包括布局，聊天信息
-            adapter.insertLastItem(new ItemModel(ItemModel.LEFT_TEXT, msg));
+            if (msg.getType() == 1) {
+                //在最后插入一条item，包括布局，聊天信息
+                adapter.insertLastItem(new ItemModel(ItemModel.LEFT_TEXT, msg));
+            } else if (msg.getType() == 2) {
+                adapter.insertLastItem(new ItemModel(ItemModel.LEFT_LOCATION, msg));
+            }
+
             //滑动到最后
             recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
         }
+    }
+
+    /**
+     * 插入一条位置
+     * @param locInfo
+     */
+    private void sendLocMessage(String locInfo) {
+        //填充一条聊天信息，包括头像，消息内容
+        MsgModel msgModel = new MsgModel();
+        msgModel.setToUser(to);
+        msgModel.setType(Constant.MSG_TYPE_LOC);
+        msgModel.setContent(locInfo);
+        //在最后插入一条item，包括布局，聊天信息
+        adapter.insertLastItem(new ItemModel(ItemModel.RIGHT_LOCTION, msgModel));
+        insertSession(msgModel);
     }
 
 
@@ -66,7 +88,6 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
         if (txtContent.equals("")) {
             return;
         }
-
         //填充一条聊天信息，包括头像，消息内容
         MsgModel msgModel = new MsgModel();
         msgModel.setToUser(to);
@@ -115,26 +136,32 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
                 break;
             case R.id.tv_loc:
                 Intent intent_loc = new Intent(this, ShareLocActivity.class);
-                //用Bundle携带数据
                 Bundle bundle = new Bundle();
                 bundle.putString("to_user", to);
                 intent_loc.putExtras(bundle);
-                startActivity(intent_loc);
+                startActivityForResult(intent_loc, 100);
                 break;
             default:
                 break;
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 100) {
+            if (resultCode == 200) {
+                String locInfo=data.getStringExtra("my_location");
+                sendLocMessage(locInfo);
+            }
+        }
+
+    }
+
+
     //------------------------------------------------------
     @Override
     protected int provideContentViewId() {
         return R.layout.activity_chat;
-    }
-
-    @Override
-    public boolean canBack() {
-        return true;
     }
 
     @Override
@@ -147,6 +174,7 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext=this;
         findView();
         init();
         initEditText();
@@ -167,7 +195,7 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
         EventBus.getDefault().register(this);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        recyclerView.setAdapter(adapter = new ChatAdapter());
+        recyclerView.setAdapter(adapter = new ChatAdapter(mContext));
         et_message.setOnClickListener(this);
         tv_send.setOnClickListener(this);
         chat_more.setOnClickListener(this);
