@@ -24,7 +24,7 @@ import ldu.guofeng.imdemo.im.SmackUtils;
 import ldu.guofeng.imdemo.util.ToastUtils;
 
 /**
- * 联系人适配器
+ * 联系人页适配器
  *
  * @author GUOFENG
  */

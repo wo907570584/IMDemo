@@ -22,6 +22,9 @@ import ldu.guofeng.imdemo.activity.ChatActivity;
 import ldu.guofeng.imdemo.base.Constant;
 import ldu.guofeng.imdemo.bean.SessionModel;
 
+/**
+ * 会话页适配器
+ */
 public class SessionAdapter extends RecyclerView.Adapter<SessionAdapter.MsgViewHolder> {
 
     private ArrayList<SessionModel> dataList = new ArrayList<>();

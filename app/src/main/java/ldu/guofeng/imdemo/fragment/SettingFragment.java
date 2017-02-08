@@ -19,6 +19,9 @@ import ldu.guofeng.imdemo.im.SmackUtils;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
 import ldu.guofeng.imdemo.view.CustomPopWindow;
 
+/**
+ * 设置页
+ */
 
 public class SettingFragment extends Fragment implements View.OnClickListener {
 

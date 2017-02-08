@@ -14,6 +14,9 @@ import ldu.guofeng.imdemo.util.PreferencesUtils;
 import ldu.guofeng.imdemo.util.ToastUtils;
 import ldu.guofeng.imdemo.view.CustomReturnToolbar;
 
+/**
+ * 注册页
+ */
 public class RegisterActivity extends CustomReturnToolbar {
 
     private Button btn_register;
@@ -79,10 +82,7 @@ public class RegisterActivity extends CustomReturnToolbar {
                     Intent intent = new Intent(mContext, LoginActivity.class);
                     startActivity(intent);
                     finish();
-                } else {
-                    ToastUtils.showShortToast("请检查用户名密码/网络状态");
                 }
-
             }
         }).start();
     }

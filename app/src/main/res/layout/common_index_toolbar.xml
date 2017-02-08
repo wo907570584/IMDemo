@@ -9,8 +9,8 @@
 
     <Button
         android:id="@+id/toolbar_left_btn"
-        android:layout_width="35dp"
-        android:layout_height="match_parent"
+        android:layout_width="23dp"
+        android:layout_height="23dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:background="@drawable/back_img_selector"

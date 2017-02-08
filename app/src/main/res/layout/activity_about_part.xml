@@ -20,7 +20,7 @@
             android:drawablePadding="6dp"
             android:drawableStart="@drawable/ic_lobe"
             android:gravity="center"
-            android:text="Happy Talk"
+            android:text="@string/app_name"
             android:textColor="@color/common_title"
             android:textSize="18sp"
             tools:ignore="RtlCompat" />
@@ -178,9 +178,7 @@
                 android:textColor="@color/cloudyText"
                 tools:ignore="RtlCompat"
                 tools:targetApi="lollipop" />
-
         </GridLayout>
-
 
         <View
             android:layout_width="match_parent"
@@ -201,7 +199,7 @@
             android:drawablePadding="6dp"
             android:drawableStart="@drawable/ic_android"
             android:gravity="center"
-            android:text="感谢开源项目和网站服务"
+            android:text="感谢前辈造的轮子"
             android:textColor="@color/common_title"
             android:textSize="18sp"
             tools:ignore="RtlCompat" />
@@ -233,6 +231,4 @@
             android:layout_marginTop="12dp"
             android:background="@color/line" />
     </LinearLayout>
-
-
 </LinearLayout>

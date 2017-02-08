@@ -39,7 +39,6 @@ public class LoginActivity extends Activity {
     private LoginAsyncTask loginAsyncTask;
 
 
-    //---------------------------------------------------
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

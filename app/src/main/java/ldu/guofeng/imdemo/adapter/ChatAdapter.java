@@ -21,7 +21,7 @@ import ldu.guofeng.imdemo.bean.ItemModel;
 import ldu.guofeng.imdemo.bean.MsgModel;
 
 /**
- * 聊天界面适配器
+ * 聊天页适配器
  *
  * @author GUOFENG
  */
@@ -173,7 +173,7 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BaseAdapter> {
             lr_loc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //点击打开位置详情
+                    //点击,打开新页面显示位置详情
                     Intent intent = new Intent(mContext, MapLocActivity.class);
                     intent.putExtra("locinfo", msgModel.getContent());
                     mContext.startActivity(intent);
@@ -205,7 +205,6 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BaseAdapter> {
             lr_loc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    //点击打开位置详情
                     Intent intent = new Intent(mContext, MapLocActivity.class);
                     intent.putExtra("loc_info", msgModel.getContent());
                     mContext.startActivity(intent);

@@ -27,6 +27,9 @@ import ldu.guofeng.imdemo.base.IMApplication;
 import ldu.guofeng.imdemo.bean.Friend;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
 
+/**
+ * smack 常用方法
+ */
 public class SmackUtils {
 
     //connection.isConnected()
@@ -154,7 +157,7 @@ public class SmackUtils {
         Collection<RosterEntry> rosterEntries = roster.getEntries();
         for (RosterEntry rosterentry : rosterEntries) {
             Friend friend = new Friend();
-            if (!rosterentry.getType().toString().equals("none")){
+            if (!rosterentry.getType().toString().equals("none")) {
                 friend.setName(rosterentry.getUser().split("@")[0]);
                 list.add(friend);
                 Log.e("IMDemo", rosterentry.getUser());

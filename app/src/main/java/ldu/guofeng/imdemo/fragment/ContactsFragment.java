@@ -29,7 +29,9 @@ import ldu.guofeng.imdemo.im.SmackUtils;
 import ldu.guofeng.imdemo.util.DividerItemDecoration;
 import ldu.guofeng.imdemo.view.CustomIndexToolbar;
 
-
+/**
+ * 联系人页
+ */
 public class ContactsFragment extends Fragment {
 
     private Context mContext;
@@ -65,6 +67,12 @@ public class ContactsFragment extends Fragment {
                 mContext.startActivity(intent);
             }
         });
+        mToolbar.setLeftButtonListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                initData();
+            }
+        });
         //RecyclerView设置
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.rv);
         mRecyclerView.setLayoutManager(mManager = new LinearLayoutManager(mContext));
@@ -79,7 +87,6 @@ public class ContactsFragment extends Fragment {
 
 
     }
-
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {

@@ -31,19 +31,23 @@ import ldu.guofeng.imdemo.im.SmackUtils;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
 import ldu.guofeng.imdemo.view.CustomReturnToolbar;
 
+/**
+ * 聊天
+ */
 public class ChatActivity extends CustomReturnToolbar implements View.OnClickListener {
 
+    private Context mContext;
     private RecyclerView recyclerView;
     private ChatAdapter adapter;
-    private EditText et_message;// 键盘焦点View，用于输入内容
-    private TextView tv_send;
-    private TextView send_loc;
+
     private String txtContent;
     private String form, to;
-    private LinearLayout chat_more_container;//+布局
-    private ImageView chat_more;// 用于切换键盘与面板的按钮View
-    private Context mContext;
 
+    private EditText et_message;//文本输入框
+    private TextView tv_send;//发送标签
+    private ImageView chat_more;//用于切换键盘与功能面板
+    private LinearLayout chat_more_container;//功能面板布局
+    private TextView send_loc;//发送位置标签
 
     /**
      * 订阅接收消息
@@ -66,35 +70,13 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
     }
 
     /**
-     * 插入一条位置
-     * @param locInfo
-     */
-    private void sendLocMessage(String locInfo) {
-        //填充一条聊天信息，包括头像，消息内容
-        MsgModel msgModel = new MsgModel();
-        msgModel.setToUser(to);
-        msgModel.setType(Constant.MSG_TYPE_LOC);
-        msgModel.setContent(locInfo);
-        //在最后插入一条item，包括布局，聊天信息
-        adapter.insertLastItem(new ItemModel(ItemModel.RIGHT_LOCTION, msgModel));
-        insertSession(msgModel);
-    }
-
-
-    /**
      * 发送文本消息
      */
     private void sendTextMessage() {
+        //发送文本消息
         if (txtContent.equals("")) {
             return;
         }
-        //填充一条聊天信息，包括头像，消息内容
-        MsgModel msgModel = new MsgModel();
-        msgModel.setToUser(to);
-        msgModel.setType(Constant.MSG_TYPE_TEXT);
-        msgModel.setContent(txtContent);
-        //在最后插入一条item，包括布局，聊天信息
-        adapter.insertLastItem(new ItemModel(ItemModel.RIGHT_TEXT, msgModel));
 
         final String message = form + Constant.SPLIT + to + Constant.SPLIT
                 + Constant.MSG_TYPE_TEXT + Constant.SPLIT
@@ -106,12 +88,41 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
             }
         }).start();
 
+
         //滑动到最后,清空输入框
         recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
         et_message.setText("");
+
+
+        //在聊天列表插入一条文本消息
+        MsgModel msgModel = new MsgModel();
+        msgModel.setToUser(to);
+        msgModel.setType(Constant.MSG_TYPE_TEXT);
+        msgModel.setContent(txtContent);
+        adapter.insertLastItem(new ItemModel(ItemModel.RIGHT_TEXT, msgModel));
         insertSession(msgModel);
     }
 
+    /**
+     * 在消息列表插入一条位置消息
+     *
+     * @param locInfo
+     */
+    private void insertLocMessage(String locInfo) {
+        //在聊天列表插入一条位置消息
+        MsgModel msgModel = new MsgModel();
+        msgModel.setToUser(to);
+        msgModel.setType(Constant.MSG_TYPE_LOC);
+        msgModel.setContent(locInfo);
+        adapter.insertLastItem(new ItemModel(ItemModel.RIGHT_LOCTION, msgModel));
+        insertSession(msgModel);
+    }
+
+    /**
+     * 插入会话列表一条会话
+     *
+     * @param msg
+     */
     public void insertSession(MsgModel msg) {
         SessionModel sessionModel = new SessionModel();
         sessionModel.setType(msg.getType());
@@ -128,35 +139,40 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
                 break;
             case R.id.tv_send:
                 hidePanelView();//隐藏面板
-                sendTextMessage();//发送消息
+                sendTextMessage();//发送文本消息
                 break;
             case R.id.chat_more:
                 hideSoftInputView();//隐藏软键盘
                 hidePanelHandler.postDelayed(hidePanelTask, 200);//显示面板
                 break;
             case R.id.tv_loc:
-                Intent intent_loc = new Intent(this, ShareLocActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("to_user", to);
-                intent_loc.putExtras(bundle);
-                startActivityForResult(intent_loc, 100);
+                sendLocMessage();//发送位置
                 break;
             default:
                 break;
         }
     }
 
+    /**
+     * 发送位置消息
+     */
+    private void sendLocMessage() {
+        Intent intent_loc = new Intent(this, ShareLocActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("to_user", to);
+        intent_loc.putExtras(bundle);
+        startActivityForResult(intent_loc, 100);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 100) {
             if (resultCode == 200) {
-                String locInfo=data.getStringExtra("my_location");
-                sendLocMessage(locInfo);
+                String locInfo = data.getStringExtra("my_location");
+                insertLocMessage(locInfo);
             }
         }
-
     }
-
 
     //------------------------------------------------------
     @Override
@@ -174,7 +190,7 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext=this;
+        mContext = this;
         findView();
         init();
         initEditText();
@@ -185,7 +201,6 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
         et_message = (EditText) findViewById(R.id.et_message);
         tv_send = (TextView) findViewById(R.id.tv_send);
         chat_more = (ImageView) findViewById(R.id.chat_more);
-
         chat_more_container = (LinearLayout) findViewById(R.id.chat_more_container);
         send_loc = (TextView) findViewById(R.id.tv_loc);
     }
@@ -200,7 +215,6 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
         tv_send.setOnClickListener(this);
         chat_more.setOnClickListener(this);
         send_loc.setOnClickListener(this);
-
         form = PreferencesUtils.getInstance().getString("username");
         //接收数据
         Bundle bundle = this.getIntent().getExtras();

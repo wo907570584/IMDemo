@@ -161,7 +161,6 @@ public class ShareLocActivity extends CustomReturnToolbar {
             LatLng point = new LatLng(location.getLatitude(), location.getLongitude());
             MapStatusUpdate msu = MapStatusUpdateFactory.newLatLngZoom(point, 17);
             mBaiduMap.animateMapStatus(msu);
-
         }
     }
 

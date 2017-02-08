@@ -17,6 +17,9 @@ import com.baidu.mapapi.model.LatLng;
 import ldu.guofeng.imdemo.R;
 import ldu.guofeng.imdemo.view.CustomReturnToolbar;
 
+/**
+ * 位置详情页
+ */
 public class MapLocActivity extends CustomReturnToolbar {
     private MapView mMapView = null;//地图
     private BaiduMap mBaiduMap = null;
@@ -40,7 +43,7 @@ public class MapLocActivity extends CustomReturnToolbar {
         String address = arr[4];//地址
 
         tv_address = (TextView) findViewById(R.id.tv_address);
-        tv_address.setText(address+describe);
+        tv_address.setText(address + describe);
 
         mMapView = (MapView) findViewById(R.id.bmapView);
         mBaiduMap = mMapView.getMap();
@@ -56,7 +59,6 @@ public class MapLocActivity extends CustomReturnToolbar {
         //在地图上添加Marker，并显示
         mBaiduMap.addOverlay(option);
     }
-
 
     @Override
     protected void onResume() {

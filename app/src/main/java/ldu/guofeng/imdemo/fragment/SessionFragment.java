@@ -20,7 +20,9 @@ import ldu.guofeng.imdemo.bean.MsgModel;
 import ldu.guofeng.imdemo.bean.SessionModel;
 import ldu.guofeng.imdemo.util.DividerItemDecoration;
 
-
+/**
+ * 会话页
+ */
 public class SessionFragment extends Fragment {
     private View mView;
     private Context mContext;

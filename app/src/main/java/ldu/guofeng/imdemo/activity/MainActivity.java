@@ -10,6 +10,9 @@ import ldu.guofeng.imdemo.fragment.ContactsFragment;
 import ldu.guofeng.imdemo.fragment.SessionFragment;
 import ldu.guofeng.imdemo.fragment.SettingFragment;
 
+/**
+ * 主页
+ */
 public class MainActivity extends Activity implements View.OnClickListener {
 
     private SessionFragment sessionFragment;//会话页
@@ -27,11 +30,8 @@ public class MainActivity extends Activity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         findView();
         init();
-
-
     }
 
-    //-----------------------------------------------------
     private void findView() {
         sessionFragment = (SessionFragment) getFragmentManager().findFragmentById(R.id.fragment_session);
         contactsFragment = (ContactsFragment) getFragmentManager().findFragmentById(R.id.fragment_constact);

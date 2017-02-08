@@ -10,6 +10,9 @@ import ldu.guofeng.imdemo.base.Constant;
 import ldu.guofeng.imdemo.im.SmackUtils;
 import ldu.guofeng.imdemo.view.CustomReturnToolbar;
 
+/**
+ * 添加好友
+ */
 public class AddFriendActivity extends CustomReturnToolbar {
 
     private EditText userName;
@@ -19,6 +22,7 @@ public class AddFriendActivity extends CustomReturnToolbar {
      * 添加好友
      */
     private void doAddFriend() {
+        //这里写添加好友逻辑
         final String username = userName.getText().toString().trim();
         new Thread(new Runnable() {
             @Override
@@ -26,7 +30,6 @@ public class AddFriendActivity extends CustomReturnToolbar {
                 SmackUtils.getInstance().addFriend(username + "@" + Constant.IM_HOST);
             }
         }).start();
-
     }
 
     //------------------------------------------

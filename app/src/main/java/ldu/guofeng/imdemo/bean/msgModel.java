@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 
 public class MsgModel implements Serializable {
+
     private String fromUser;//发送者
     private String toUser;//接收者
     private int type;//信息类型

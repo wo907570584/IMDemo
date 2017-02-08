@@ -15,10 +15,10 @@
     <string name="exit_app">退出登录</string>
 
     <string name="guofeng_alipay">122878486@qq.com</string>
-    <string name="html_guofeng_github">https://github.com/iamguofeng/HappyTalk</string>
+    <string name="html_guofeng_github">https://github.com/iamguofeng/IMDemo</string>
     <string name="html_guofeng_csdn">http://blog.csdn.net/plain_maple</string>
-    <string name="share_app">分享 Happy Talk</string>
-    <string name="share_app_txt">小伙伴们，一起来研究 “Happy Talk”，您可以在 https://github.com/iamguofeng 下载</string>
-    <string name="app_introduce">这是一款简约的通信应用。\n系统采用Client／Server结构，基于开源的XMPP协议。Android客户端连接到Openfire服务器作为即时通讯平台。\n\nAuther: 郭峰\nEmail: iamguofeng@163.com\nAddress: 山东省鲁东大学软件工程</string>
-    <string name="open_source">•asmack:http://www.igniterealtime.org/projects/smack\n•openfire: http://www.igniterealtime.org/downloads/index.jsp#openfire\n •Iconfont:http://www.iconfont.cn/plus\n </string>
+    <string name="share_app">分享</string>
+    <string name="share_app_txt">小伙伴们，一起来研究刚做的小应用，您可以在 https://github.com/iamguofeng/IMDemo 下载</string>
+    <string name="app_introduce">这是一款简约的通信应用。基于Openfire + Smack4.19 + Android \n\n作者: 郭峰 \nQQ：122878486 \n邮箱: iamguofeng@163.com \n地址: 山东省鲁东大学软件工程</string>
+    <string name="open_source">·字母索引列表 Indexlib \n·左滑删除 SwipeDelMenuLayout \n·图片加载框架 Glide \n·事件发布/订阅框架 Eventbus \n·XMPP客户端类库 Smack \n·百度定位和地图SDK BaiduLBS_Android</string>
 </resources>

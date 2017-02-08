@@ -68,16 +68,12 @@ public class PacketListener implements StanzaListener {
                 case unavailable://表示收到离线状态
                     break;
                 case subscribe://表示收到请求订阅
-                    Log.e("【PacketListener】", "订阅");
-                    updateList();
                     break;
                 case subscribed://表示收到同意订阅
                     break;
                 case unsubscribed://表示收到拒绝订阅
                     break;
                 case unsubscribe://表示收到取消订阅
-                    Log.e("【PacketListener】", "取消订阅");
-                    updateList();
                     break;
                 case error://表示收到错误消息
                     break;
@@ -114,10 +110,4 @@ public class PacketListener implements StanzaListener {
         IMApplication.getMyAppContext().sendBroadcast(intent_nftc);
     }
 
-    private void updateList() {
-        //广播，更新列表
-        Intent intent_list = new Intent();
-        intent_list.setAction("TYPE_UPDATE_LIST");
-        IMApplication.getMyAppContext().sendBroadcast(intent_list);
-    }
 }
