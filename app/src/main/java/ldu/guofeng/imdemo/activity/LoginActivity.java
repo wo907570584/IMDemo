@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import ldu.guofeng.imdemo.R;
 import ldu.guofeng.imdemo.im.LoginAsyncTask;
-import ldu.guofeng.imdemo.util.ActivityCollector;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
 import ldu.guofeng.imdemo.util.ToastUtils;
 
@@ -43,7 +42,6 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ActivityCollector.addActivity("LoginActivity",this);
         mContext = this;
         findView();
         init();
@@ -63,6 +61,11 @@ public class LoginActivity extends Activity {
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        finish();
+    }
 
     @Override
     protected void onDestroy() {

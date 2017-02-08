@@ -9,7 +9,6 @@ import org.jivesoftware.smack.packet.Stanza;
 
 import ldu.guofeng.imdemo.activity.MainActivity;
 import ldu.guofeng.imdemo.base.IMApplication;
-import ldu.guofeng.imdemo.util.ActivityCollector;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
 import ldu.guofeng.imdemo.util.ToastUtils;
 import ldu.guofeng.imdemo.view.CustomLoadingDialog;
@@ -93,7 +92,6 @@ public class LoginAsyncTask extends AsyncTask<String, String, Boolean> {
         if (bool) {
             Intent intent = new Intent(mContext, MainActivity.class);
             mContext.startActivity(intent);
-            ActivityCollector.removeActivity("LoginActivity");
         } else {
             ToastUtils.showShortToast("请检查用户名和密码是否正确/网络是否可用");
         }
