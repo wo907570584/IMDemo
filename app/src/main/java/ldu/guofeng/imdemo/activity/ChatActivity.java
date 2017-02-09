@@ -89,11 +89,6 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
         }).start();
 
 
-        //滑动到最后,清空输入框
-        recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
-        et_message.setText("");
-
-
         //在聊天列表插入一条文本消息
         MsgModel msgModel = new MsgModel();
         msgModel.setToUser(to);
@@ -101,6 +96,10 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
         msgModel.setContent(txtContent);
         adapter.insertLastItem(new ItemModel(ItemModel.RIGHT_TEXT, msgModel));
         insertSession(msgModel);
+
+        //滑动到最后,清空输入框
+        recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+        et_message.setText("");
     }
 
     /**

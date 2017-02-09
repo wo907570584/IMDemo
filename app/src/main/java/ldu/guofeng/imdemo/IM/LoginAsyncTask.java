@@ -55,16 +55,7 @@ public class LoginAsyncTask extends AsyncTask<String, String, Boolean> {
         if (SmackUtils.getInstance().login(username, pwd)) {
             PreferencesUtils.getInstance().putString("username", username);
             PreferencesUtils.getInstance().putString("pwd", pwd);
-
-            //初始化监听消息
-//            ChatManager mChatManager = ChatManager.getInstanceFor(IMApplication.connection);
-//            mChatManager.addChatListener(new ChatManagerListener() {
-//                @Override
-//                public void chatCreated(Chat chat, boolean createdLocally) {
-//                    chat.addMessageListener(new ReceiveMsgListener());
-//                }
-//            });
-
+            //初始化，监听包
             IMApplication.connection.addAsyncStanzaListener(
                     new PacketListener(),
                     new StanzaFilter() {

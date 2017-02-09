@@ -169,13 +169,13 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.BaseAdapter> {
             Glide.with(itemView.getContext()).load(R.mipmap.ic_launcher)
                     .placeholder(R.mipmap.ic_launcher).error(R.mipmap.ic_launcher)
                     .into(ic_user);
-            tv_address.setText("对方位于" + msgModel.getContent().split("@")[3]);
+            tv_address.setText("我位于" + msgModel.getContent().split("@")[3]);
             lr_loc.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //点击,打开新页面显示位置详情
                     Intent intent = new Intent(mContext, MapLocActivity.class);
-                    intent.putExtra("locinfo", msgModel.getContent());
+                    intent.putExtra("loc_info", msgModel.getContent());
                     mContext.startActivity(intent);
                 }
             });
