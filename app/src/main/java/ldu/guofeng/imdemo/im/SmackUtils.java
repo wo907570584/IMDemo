@@ -74,16 +74,6 @@ public class SmackUtils {
     }
 
     /**
-     * 断开连接
-     */
-    public void exitConnect() {
-        if (IMApplication.connection != null && IMApplication.connection.isConnected()) {
-            IMApplication.connection.disconnect();
-            IMApplication.connection = null;
-        }
-    }
-
-    /**
      * 检查连接
      */
     private void checkConnect() {
@@ -98,8 +88,20 @@ public class SmackUtils {
             }
         }
     }
+
     /**
-     * 检查连接
+     * 断开连接
+     */
+    public void exitConnect() {
+        if (IMApplication.connection != null && IMApplication.connection.isConnected()) {
+            IMApplication.connection.disconnect();
+            IMApplication.connection = null;
+        }
+    }
+
+
+    /**
+     * 检查登录
      */
     private void checkLogin() {
         if (!IMApplication.connection.isAuthenticated()) {//没有连接到服务器
@@ -113,6 +115,7 @@ public class SmackUtils {
             }
         }
     }
+
     /**
      * 注册
      *

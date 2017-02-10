@@ -33,26 +33,34 @@ public class LoginAsyncTask extends AsyncTask<String, String, Boolean> {
     }
 
 
-    //该方法运行在UI线程中,在执行耗时操作前被调用，主要用于UI控件初始化操作
+    /**
+     * 该方法运行在UI线程中,在执行耗时操作前被调用，主要用于UI控件初始化操作
+     */
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        //显示登录提示条
         loadDialog = new CustomLoadingDialog(mContext);
         loadDialog.setTitle("正在登录...");
         loadDialog.show();
     }
 
-    //必要方法。
-    //该方法不运行在UI线程中,主要用于耗时的处理工作,
-    //可调用publishProgress()方法，触发onProgressUpdate对UI进行操作，更新进度。
+
+    /**
+     * 必须重写的方法
+     * 该方法不运行在UI线程中,主要用于耗时的处理工作,
+     * 可调用publishProgress()方法，触发onProgressUpdate对UI进行操作，更新任务进度。
+     */
     @Override
     protected Boolean doInBackground(String... strings) {
+        //获取执行异步任务时传入的参数
         String username = strings[0];
         String pwd = strings[1];
         //建立连接
         SmackUtils.getInstance().getXMPPConnection();
-        //登录
+        //登录成功
         if (SmackUtils.getInstance().login(username, pwd)) {
+            //保存密码到本地
             PreferencesUtils.getInstance().putString("username", username);
             PreferencesUtils.getInstance().putString("pwd", pwd);
             //初始化，监听包
@@ -65,14 +73,14 @@ public class LoginAsyncTask extends AsyncTask<String, String, Boolean> {
                         }
                     }
             );
-
-            return true;
+            return true;//传送给onPostExecute布尔值
         }
-        return false;
+        return false;//传送给onPostExecute布尔值
     }
 
-    //必要方法。
-    //doInBackground执行完成后，此方法被UI线程调用，计算结果传递到UI线程。
+    /**
+     * doInBackground执行完成后，此方法被UI线程调用，计算结果传递到UI线程。
+     */
     @Override
     protected void onPostExecute(Boolean bool) {
         //关闭等待条
@@ -86,11 +94,5 @@ public class LoginAsyncTask extends AsyncTask<String, String, Boolean> {
         } else {
             ToastUtils.showShortToast("请检查用户名和密码是否正确/网络是否可用");
         }
-    }
-
-    //取消线程操作的时候被调用
-    @Override
-    protected void onCancelled() {
-        super.onCancelled();
     }
 }

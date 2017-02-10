@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.mcxtzhang.indexlib.IndexBar.widget.IndexBar;
 import com.mcxtzhang.indexlib.suspension.SuspensionDecoration;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -94,21 +95,34 @@ public class ContactsFragment extends Fragment {
         initData();
     }
 
-    final Handler mHandler = new Handler() {
+
+    private final MyHandler mHandler = new MyHandler(this);
+
+    private static class MyHandler extends Handler {
+        private final WeakReference<ContactsFragment> mWeakReference;
+
+        MyHandler(ContactsFragment contactsFragment) {
+            mWeakReference = new WeakReference<ContactsFragment>(contactsFragment);
+        }
+
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Log.e("更新好友列表", "好友数量=" + mDatas.size());
-            mAdapter.setDatas(mDatas);
-            mAdapter.notifyDataSetChanged();
-            mIndexBar.setmPressedShowTextView(mTvSideBarHint)//设置HintTextView
-                    .setNeedRealIndex(true)//设置需要真实的索引
-                    .setmLayoutManager(mManager)//设置RecyclerView的LayoutManager
-                    .setmSourceDatas(mDatas)//设置数据
-                    .invalidate();
-            mDecoration.setmDatas(mDatas);
+            ContactsFragment contactsFragment = mWeakReference.get();
+            if (contactsFragment != null) {
+                Log.e("更新好友列表", "好友数量=" + contactsFragment.mDatas.size());
+                contactsFragment.mAdapter.setDatas(contactsFragment.mDatas);
+                contactsFragment.mAdapter.notifyDataSetChanged();
+                contactsFragment.mIndexBar.setmPressedShowTextView(contactsFragment.mTvSideBarHint)//设置HintTextView
+                        .setNeedRealIndex(true)//设置需要真实的索引
+                        .setmLayoutManager(contactsFragment.mManager)//设置RecyclerView的LayoutManager
+                        .setmSourceDatas(contactsFragment.mDatas)//设置数据
+                        .invalidate();
+                contactsFragment.mDecoration.setmDatas(contactsFragment.mDatas);
+            }
         }
-    };
+    }
+
 
     private void initData() {
         /**
