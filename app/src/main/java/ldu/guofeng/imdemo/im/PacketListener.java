@@ -17,7 +17,7 @@ import ldu.guofeng.imdemo.base.IMApplication;
 import ldu.guofeng.imdemo.bean.MsgModel;
 
 /**
- * org.jivesoftware.smack.StanzaListener 异步通知packet的接口。
+ * 异步通知packet的接口
  */
 
 public class PacketListener implements StanzaListener {
@@ -25,7 +25,7 @@ public class PacketListener implements StanzaListener {
     @Override
     public void processPacket(final Stanza packet) throws SmackException.NotConnectedException {
         Log.e("【PacketListener】", packet.toString());
-        //表示接收到是消息包，也可以通过implements ChatMessageListener来获取Message
+        //表示接收到是消息包
         if (packet instanceof Message) {
             switch (((Message) packet).getType()) {
                 case chat://表示收到单聊包，

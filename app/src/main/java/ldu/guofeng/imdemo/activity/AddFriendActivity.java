@@ -22,7 +22,6 @@ public class AddFriendActivity extends CustomReturnToolbar {
      * 添加好友
      */
     private void doAddFriend() {
-        //这里写添加好友逻辑
         final String username = userName.getText().toString().trim();
         new Thread(new Runnable() {
             @Override

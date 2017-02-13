@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.PopupWindow;
 
 /**
- * 自定义PopWindow类
+ * 自定义PopWindow
  * 封装PopWindow的常用属性，用Builder模式支持链式调用
  */
 

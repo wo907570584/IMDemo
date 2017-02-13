@@ -57,13 +57,12 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void recMsgEventBus(MsgModel msg) {
         if (msg.getFromUser().equals(to)) {
-            if (msg.getType() == 1) {
+            if (msg.getType() == Constant.MSG_TYPE_TEXT) {
                 //在最后插入一条item，包括布局，聊天信息
                 adapter.insertLastItem(new ItemModel(ItemModel.LEFT_TEXT, msg));
-            } else if (msg.getType() == 2) {
+            } else if (msg.getType() == Constant.MSG_TYPE_LOC) {
                 adapter.insertLastItem(new ItemModel(ItemModel.LEFT_LOCATION, msg));
             }
-
             //滑动到最后
             recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
         }
@@ -73,7 +72,6 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
      * 发送文本消息
      */
     private void sendTextMessage() {
-        //发送文本消息
         if (txtContent.equals("")) {
             return;
         }
@@ -87,7 +85,6 @@ public class ChatActivity extends CustomReturnToolbar implements View.OnClickLis
                 SmackUtils.getInstance().sendMessage(message, to);
             }
         }).start();
-
 
         //在聊天列表插入一条文本消息
         MsgModel msgModel = new MsgModel();

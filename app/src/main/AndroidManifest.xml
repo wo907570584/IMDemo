@@ -58,14 +58,12 @@
         <activity android:name=".activity.ChatActivity" />
         <activity android:name=".activity.AddFriendActivity" />
         <activity android:name=".activity.ShareLocActivity" />
-        <!-- 新消息广播>发出通知 -->
+        <activity android:name=".activity.MapLocActivity"/>
+        <!-- 新消息广播,发出通知 -->
         <receiver android:name=".util.NewMsgReceiver">
             <intent-filter>
                 <action android:name="TYPE_NEW_MSG" />
             </intent-filter>
         </receiver>
-
-        <activity android:name=".activity.MapLocActivity"></activity>
     </application>
-
 </manifest>

@@ -111,12 +111,19 @@ public class ContactsFragment extends Fragment {
             ContactsFragment contactsFragment = mWeakReference.get();
             if (contactsFragment != null) {
                 Log.e("更新好友列表", "好友数量=" + contactsFragment.mDatas.size());
+                //设置数据、更新适配器
                 contactsFragment.mAdapter.setDatas(contactsFragment.mDatas);
                 contactsFragment.mAdapter.notifyDataSetChanged();
-                contactsFragment.mIndexBar.setmPressedShowTextView(contactsFragment.mTvSideBarHint)//设置HintTextView
-                        .setNeedRealIndex(true)//设置需要真实的索引
-                        .setmLayoutManager(contactsFragment.mManager)//设置RecyclerView的LayoutManager
-                        .setmSourceDatas(contactsFragment.mDatas)//设置数据
+                //下面代码属于设置集成的：字母索引列表
+                contactsFragment.mIndexBar.
+                        //设置HintTextView
+                        setmPressedShowTextView(contactsFragment.mTvSideBarHint)
+                        //设置需要真实的索引
+                        .setNeedRealIndex(true)
+                        //设置RecyclerView的LayoutManager
+                        .setmLayoutManager(contactsFragment.mManager)
+                        //设置数据
+                        .setmSourceDatas(contactsFragment.mDatas)
                         .invalidate();
                 contactsFragment.mDecoration.setmDatas(contactsFragment.mDatas);
             }

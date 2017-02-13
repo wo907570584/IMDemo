@@ -62,8 +62,8 @@ public class ConstactAdapter extends RecyclerView.Adapter<ConstactAdapter.ViewHo
                 //打开聊天界面
                 Intent intent = new Intent(mContext, ChatActivity.class);
                 //用Bundle携带数据
-                Bundle bundle=new Bundle();
-                bundle.putString("to_user",mDatas.get(position).getName() );
+                Bundle bundle = new Bundle();
+                bundle.putString("to_user", mDatas.get(position).getName());
                 intent.putExtras(bundle);
                 mContext.startActivity(intent);
             }
@@ -80,26 +80,20 @@ public class ConstactAdapter extends RecyclerView.Adapter<ConstactAdapter.ViewHo
                     @Override
                     public void handleMessage(Message msg) {
                         super.handleMessage(msg);
-                        switch (msg.what) {
-                            case 1:
-                                mDatas.remove(holder.getAdapterPosition());
-                                notifyDataSetChanged();
-                                ToastUtils.showShortToast("删除成功");
-                                break;
-                            default:
-                                break;
-                        }
+                        mDatas.remove(holder.getAdapterPosition());
+                        notifyDataSetChanged();
+                        ToastUtils.showShortToast("删除成功");
                     }
-
                 };
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        int ok = SmackUtils.getInstance()
-                                .deleteFriend(mDatas.get(position).getName()+"@"+ Constant.IM_HOST);
-                        mHandler.sendEmptyMessage(ok);
+                        SmackUtils.getInstance()
+                                .deleteFriend(mDatas.get(position).getName() + "@" + Constant.IM_HOST);
+                        mHandler.sendEmptyMessage(0);
                     }
                 }).start();
+
             }//end onclick
         });
     }

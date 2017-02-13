@@ -12,7 +12,7 @@ import android.widget.TextView;
 import ldu.guofeng.imdemo.R;
 
 /**
- * 通用标题栏（左按钮、标签、右按钮、标签、中间标签 和 点击事件）
+ * 自定义标题栏（左按钮、标签、右按钮、标签、中间标签 和 点击事件）
  *
  * @author GUOFENG
  */

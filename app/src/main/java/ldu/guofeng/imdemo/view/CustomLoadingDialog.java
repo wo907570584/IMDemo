@@ -10,7 +10,7 @@ import ldu.guofeng.imdemo.R;
 
 
 /**
- * 通用等待条
+ * 自定义等待条
  *
  * @author 郭峰
  */

@@ -28,14 +28,9 @@ import ldu.guofeng.imdemo.bean.Friend;
 import ldu.guofeng.imdemo.util.PreferencesUtils;
 
 /**
- * smack 常用方法
+ * 封装 Smack 常用方法
  */
 public class SmackUtils {
-
-    //connection.isConnected()
-    //布尔值表示是否连接到服务器,此时用户不一定登录
-    //connection.isAuthenticated()
-    //布尔值表示是否登录成功,即用户名+密码验证通过，此时与服务器保持连接
 
     private static SmackUtils smackUtils;
 
@@ -186,25 +181,6 @@ public class SmackUtils {
     }
 
     /**
-     * 删除好友
-     *
-     * @param userJID
-     * @return
-     */
-    public int deleteFriend(String userJID) {
-        try {
-            checkConnect();
-            checkLogin();
-            Roster roster = Roster.getInstanceFor(IMApplication.connection);
-            roster.removeEntry(roster.getEntry(userJID));
-        } catch (SmackException | XMPPException e) {
-            e.printStackTrace();
-        }
-        return 1;
-    }
-
-
-    /**
      * 发送消息
      *
      * @param message
@@ -234,6 +210,23 @@ public class SmackUtils {
             checkLogin();
             Roster roster = Roster.getInstanceFor(IMApplication.connection);
             roster.createEntry(userName, userName, null);
+        } catch (SmackException | XMPPException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 删除好友
+     *
+     * @param userJID
+     * @return
+     */
+    public void deleteFriend(String userJID) {
+        try {
+            checkConnect();
+            checkLogin();
+            Roster roster = Roster.getInstanceFor(IMApplication.connection);
+            roster.removeEntry(roster.getEntry(userJID));
         } catch (SmackException | XMPPException e) {
             e.printStackTrace();
         }

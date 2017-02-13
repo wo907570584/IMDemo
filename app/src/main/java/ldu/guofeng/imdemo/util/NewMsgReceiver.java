@@ -13,10 +13,12 @@ import ldu.guofeng.imdemo.base.Constant;
 import ldu.guofeng.imdemo.base.IMApplication;
 
 /**
- * 通知栏
+ * 广播接收器
+ * 作用：有新消息时，推送通知栏
  */
 
 public class NewMsgReceiver extends BroadcastReceiver {
+
     private NotificationManager myManager = null;
     private Notification myNotification = null;
     private static final int NOTIFICATION_ID = 1;
