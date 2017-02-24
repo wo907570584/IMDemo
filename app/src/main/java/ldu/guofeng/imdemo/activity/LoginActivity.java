@@ -61,11 +61,6 @@ public class LoginActivity extends Activity {
         }
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-        finish();
-    }
 
     @Override
     protected void onDestroy() {
