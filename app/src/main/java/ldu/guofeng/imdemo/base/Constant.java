@@ -8,8 +8,10 @@ package ldu.guofeng.imdemo.base;
 public class Constant {
 
     //服务器地址、服务器名称、端口
-    public static final String IM_HOST = "192.168.1.4";
-    public static final String IM_SERVER = "192.168.1.4";
+    public static final String IM_HOST = "172.20.10.2";
+    public static final String IM_SERVER = "172.20.10.2";
+
+
     public static final int IM_PORT = 5222;
 
     //消息分隔符
