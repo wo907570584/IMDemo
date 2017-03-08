@@ -1,7 +1,7 @@
 
 ###关于 
 
-1. 郭峰
+1. Author：郭峰
 2. Email: iamguofeng@163.com 
 3. CSDN: http://blog.csdn.net/plain_maple
 
